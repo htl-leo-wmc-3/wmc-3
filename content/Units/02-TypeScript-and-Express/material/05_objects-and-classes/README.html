@@ -82,7 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-aae1decb7c0a57a761683734fafe0f97.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-fa39313ee0ae67082205aa4c05164dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../site_libs/quarto-contrib/quarto-novedu-1.0.0/novedu.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -471,7 +471,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> id <span class="op">&amp;&amp;</span> name <span class="op">?</span> <span class="kw">new</span> <span class="fu">Tool</span>(id<span class="op">,</span> name) <span class="op">:</span> <span class="dt">undefined</span><span class="op">;</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Note the <code>private constructor</code>: it forces everyone through the factory, so the validation cannot be skipped. You will use this pattern in EX3.</p>
+<p>Note the <code>private constructor</code>: it forces everyone through the factory, so the validation cannot be skipped. You will use this pattern in EX4.</p>
 </section>
 <section id="inheritance" class="level3" data-number="9.4.4">
 <h3 data-number="9.4.4" class="anchored" data-anchor-id="inheritance"><span class="header-section-number">9.4.4</span> Inheritance</h3>
@@ -532,7 +532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tools <span class="op">=</span> <span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(text) <span class="im">as</span> Tool[]<span class="op">;</span> <span class="co">// NOT Tool instances - no methods!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>JSON.parse</code> produces plain objects. <code>as Tool[]</code> only silences the compiler; calling a method on one of them crashes at runtime. If you want real instances, construct them:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tools <span class="op">=</span> (<span class="bu">JSON</span><span class="op">.</span><span class="fu">parse</span>(text) <span class="im">as</span> ToolDto[])<span class="op">.</span><span class="fu">map</span>((dto) <span class="kw">=&gt;</span> Tool<span class="op">.</span><span class="fu">fromDto</span>(dto))<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This is the <code>toDto</code>/<code>fromDto</code> pattern, and it is the heart of EX3.</p>
+<p>This is the <code>toDto</code>/<code>fromDto</code> pattern, and it is the heart of EX4.</p>
 </section>
 <section id="map-and-set" class="level2" data-number="9.6">
 <h2 data-number="9.6" class="anchored" data-anchor-id="map-and-set"><span class="header-section-number">9.6</span> <code>Map</code> and <code>Set</code></h2>
