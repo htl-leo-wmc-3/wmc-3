@@ -1,0 +1,836 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Web and Mobile Computing 3",
+    "section": "",
+    "text": "Introduction\nThis book collects the theory chapters of Web and Mobile Computing 3 (WMC3) at HTL Leonding, school year 2026/27. It grows over the year, one part per unit, and each part presents the chapters of its unit in the order they are taught.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#tools-you-need",
+    "href": "index.html#tools-you-need",
+    "title": "Web and Mobile Computing 3",
+    "section": "Tools you need",
+    "text": "Tools you need\n\nVisual Studio Code with the REST Client extension\nNode.js (LTS version) and npm\nGit and a GitHub account",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/01_tools/README.html",
+    "href": "content/Units/01-Node.js/01_tools/README.html",
+    "title": "1  Tools",
+    "section": "",
+    "text": "1.1 Git\nWe will use Git to track changes on your source code.",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tools</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/01_tools/README.html#git",
+    "href": "content/Units/01-Node.js/01_tools/README.html#git",
+    "title": "1  Tools",
+    "section": "",
+    "text": "1.1.1 Commit messages\nUse the following commit messages to make sure your assignment progress is transparent at any time:\n\ntask X (started): short description\n\nif you have begun the task, but it is not yet meaningfully complete (less than ~30% of the task is done)\n\ntask X (unstable): short description\n\nif you have mostly completed the task (at least ~80% of the task is done), but you have not reliably verified everything yet\nalso if you find a bug in terms of a task you previously assumed to be “stable”\n\ntask X (stable): short description\n\nif you have completed and verified the task\n\n\nPlease note:\n\nX is the task number you have been working on.\nYou can fix the latest commit message with following command:\ngit commit --amend -m \"your fixed message\"\nIn case you have already pushed the commit, you need to execute following command afterwards:\ngit push --force origin main",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tools</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/01_tools/README.html#github",
+    "href": "content/Units/01-Node.js/01_tools/README.html#github",
+    "title": "1  Tools",
+    "section": "1.2 GitHub",
+    "text": "1.2 GitHub\nWe will use GitHub for hosting our remote repositories.\n\n1.2.1 Connecting Git with GitHub\nGitHub supports different modes of authentication:\n\nUsername and password with two-factor authentication\nPersonal access token\nSSH key",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Tools</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/01_tools/VSCode-Extensions.html",
+    "href": "content/Units/01-Node.js/01_tools/VSCode-Extensions.html",
+    "title": "2  Visual Studio Code",
+    "section": "",
+    "text": "2.1 Recommended Plugins\nGo to the Extensions icon in the vertical task bar on the left side and search for extensions on the market place, or simply click on the links below.",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Visual Studio Code</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/01_tools/VSCode-Extensions.html#recommended-plugins",
+    "href": "content/Units/01-Node.js/01_tools/VSCode-Extensions.html#recommended-plugins",
+    "title": "2  Visual Studio Code",
+    "section": "",
+    "text": "2.1.1 TypeScript Development\n\nVisual Studio Intellicode\nError Lens\nBetter Comments\nPrettier\n\n\n\n2.1.2 Network Development\n\nREST Client\nDocker\n\n\n\n2.1.3 Git\n\nGitLens\n\n\n\n2.1.4 Documentation\n\nMarkdown PDF\n\n\n\n2.1.5 Nice to have\n\nVS Code Icons\nColor Themes\nTODO Highlight",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Visual Studio Code</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html",
+    "href": "content/Units/01-Node.js/02_node/README.html",
+    "title": "3  Introduction to Node.js",
+    "section": "",
+    "text": "3.1 What is JavaScript?",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#what-is-javascript",
+    "href": "content/Units/01-Node.js/02_node/README.html#what-is-javascript",
+    "title": "3  Introduction to Node.js",
+    "section": "",
+    "text": "dynamically typed programming language\nfirst version in 1995 (Netscape, Sun Microsystems)\n\ndynamic web pages (=&gt; client-side development)\nMeanwhile also used for server-side development\n\nsupports different programming philosophies:\n\nobject-oriented programming\nfunctional programming",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#what-is-a-javascript-engine",
+    "href": "content/Units/01-Node.js/02_node/README.html#what-is-a-javascript-engine",
+    "title": "3  Introduction to Node.js",
+    "section": "3.2 What is a JavaScript engine?",
+    "text": "3.2 What is a JavaScript engine?\n\nsoftware component which executes JavaScript code\nof course each web browser needs one:\n\nSpider-Monkey (Firefox)\nV8 (Chrome, Edge)\nJavaScriptCore (Safari)",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#what-is-node.js",
+    "href": "content/Units/01-Node.js/02_node/README.html#what-is-node.js",
+    "title": "3  Introduction to Node.js",
+    "section": "3.3 What is Node.js?",
+    "text": "3.3 What is Node.js?\n\na JavaScript runtime\n\nexecutes JavaScript outside of a web browser\n\nmain components:\n\nV8 JavaScript engine\nAPI\n\n\n:bulb: Please note: Node.js is neither a programming language nor a framework!",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#node.js-installation",
+    "href": "content/Units/01-Node.js/02_node/README.html#node.js-installation",
+    "title": "3  Introduction to Node.js",
+    "section": "3.4 Node.js Installation",
+    "text": "3.4 Node.js Installation\nOn nodejs.org you find two versions:\n\nlong-term support (LTS)\n\nstable version for production applications\ncritical bugs will be fixed for 30 months\n\ncurrent\n\nversion with latest features\n\nSee https://github.com/nodejs/Release\n\nPlease note: To avoid unnecessary problems, we will stick to the LTS version!",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#hello-world",
+    "href": "content/Units/01-Node.js/02_node/README.html#hello-world",
+    "title": "3  Introduction to Node.js",
+    "section": "3.5 Hello World",
+    "text": "3.5 Hello World\nCreate the file hello-world.js with the following content:\nconsole.log(\"Hello World!\");\nAfterwards open the directory of hello-world.js in a terminal and type the following command:\n$ node hello-world.js\nAs output you will get:\n&gt; Hello World!\nPlease note: You don’t have to type the $ and you won’t get a &gt; in the output. These prefixes should just help you distinguish between terminal inputs and outputs. To make it clear, you have to type node hello-world.js and you will get Hello World! as the output.\nIn the future we will shorten the description of such an example like this:\n$ node hello-world.js\n&gt; Hello World!",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#applications",
+    "href": "content/Units/01-Node.js/02_node/README.html#applications",
+    "title": "3  Introduction to Node.js",
+    "section": "3.6 Applications",
+    "text": "3.6 Applications\nThere are different use cases for Node.js:\n\nconsole applications\n\ne.g. Angular CLI\n\nweb applications\n\ne.g. Netflix\n\ndesktop applications\n\nwith Electron framework (Node.js + Chromium)\ne.g. Visual Studio Code",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#features",
+    "href": "content/Units/01-Node.js/02_node/README.html#features",
+    "title": "3  Introduction to Node.js",
+    "section": "3.7 Features",
+    "text": "3.7 Features\n\nfast\n\nwritten in C / C++\nuses Chrome V8\n\nrich ecosystem\n\nthere exist lots of libraries (modules) you can use with Node.js\nmore of that later (see npm)\n\nfull support of ES 2015 (ES 6)",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/02_node/README.html#what-is-es",
+    "href": "content/Units/01-Node.js/02_node/README.html#what-is-es",
+    "title": "3  Introduction to Node.js",
+    "section": "3.8 What is ES?",
+    "text": "3.8 What is ES?\n\nECMAScript\n\nbasis of JavaScript\nstandardized by ECMA International\n\nES is constantly adjusted\n\nnew language features added\nyearly updates since 2015\n\nES version features and browser compatibility\n\nrefer to http://kangax.github.io/compat-table/es2016plus/\n\n\nIn modern JavaScript projects, we usually use ES modules instead of CommonJS.\n\nCommonJS uses require(...)\nES modules use import ... from ...\n\nFor this course, we use ES modules as the default approach. This keeps the syntax modern and consistent with current JavaScript usage.",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html",
+    "href": "content/Units/01-Node.js/03_npm/README.html",
+    "title": "4  Introduction to npm",
+    "section": "",
+    "text": "4.1 What is npm?",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#what-is-npm",
+    "href": "content/Units/01-Node.js/03_npm/README.html#what-is-npm",
+    "title": "4  Introduction to npm",
+    "section": "",
+    "text": "Formally called Node Package Manager\nConsists of three components:\n\nwebsite\n\ndescription of available packages\n\nregistry\n\ncontains all packages\n\nclient app\n\nCommand Line Interface (CLI) for managing packages\nautomatically installed with Node.js",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#what-do-you-do-with-npm",
+    "href": "content/Units/01-Node.js/03_npm/README.html#what-do-you-do-with-npm",
+    "title": "4  Introduction to npm",
+    "section": "4.2 What do you do with npm?",
+    "text": "4.2 What do you do with npm?\n\nManage your project\n\nauthor, version number, license, …\n\nManage your project dependencies\n\ninstall / uninstall / update packages\n\nPublish your own project to the npm registry",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#project-dependencies",
+    "href": "content/Units/01-Node.js/03_npm/README.html#project-dependencies",
+    "title": "4  Introduction to npm",
+    "section": "4.3 Project dependencies",
+    "text": "4.3 Project dependencies\nThe following problems have to be solved in every project that depends on libraries:\n\nHow do we define which dependencies the application needs?\nHow do we know if dependencies should be updated?\nHow do we reinstall dependencies on another machine?\n\nnpm solves those problems with the file package.json.",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#create-a-package.json",
+    "href": "content/Units/01-Node.js/03_npm/README.html#create-a-package.json",
+    "title": "4  Introduction to npm",
+    "section": "4.4 Create a package.json",
+    "text": "4.4 Create a package.json\n\nOpen the project directory in your terminal.\nRun the following command:\n$ npm init\nAs a result, a file called package.json will be created:\n{\n  \"name\": \"npm-demo\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"author\": \"John Snow\",\n  \"license\": \"ISC\"\n}",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#install-the-chalk-package",
+    "href": "content/Units/01-Node.js/03_npm/README.html#install-the-chalk-package",
+    "title": "4  Introduction to npm",
+    "section": "4.5 Install the chalk package",
+    "text": "4.5 Install the chalk package\n\nchalk is a package for formatting your console output.\nYou can install it via npm:\n$ npm install chalk\n\n\n:bulb: The exact version depends on the current npm registry. At the time this material was updated, the latest release is 6.0.0, so the version shown below may differ slightly in your environment.\n\n\nYou can check the installed chalk version:\n$ npm list\n&gt; npm-demo@1.0.0 /home/mh/node/npm-demo\n&gt; └── chalk@6.0.0\nYou will also find a new dependency in package.json:\n{\n  \"name\": \"npm-demo\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"author\": \"John Snow\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"chalk\": \"^6.0.0\"\n  }\n}",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#semantic-versioning",
+    "href": "content/Units/01-Node.js/03_npm/README.html#semantic-versioning",
+    "title": "4  Introduction to npm",
+    "section": "4.6 Semantic versioning",
+    "text": "4.6 Semantic versioning\n\nVersion number format: MAJOR.MINOR.PATCH\n6.0.0 means\n\nMAJOR = 6\nMINOR = 0\nPATCH = 0\n\nIncrement:\n\nMAJOR when you make incompatible API changes\nMINOR when you add functionality in a backwards compatible way\nPATCH when you make backwards compatible bug fixes\n\nMore details: semver.org",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#versions-in-package.json",
+    "href": "content/Units/01-Node.js/03_npm/README.html#versions-in-package.json",
+    "title": "4  Introduction to npm",
+    "section": "4.7 Versions in package.json",
+    "text": "4.7 Versions in package.json\n\n6.0.0 means\n\ninstall exactly version 6.0.0\n\n~6.0.0 means\n\ninstall the most recent 6.0.x version\n\n^6.0.0 means\n\ninstall the most recent 6.x.x version",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#install-a-specific-chalk-version-and-update",
+    "href": "content/Units/01-Node.js/03_npm/README.html#install-a-specific-chalk-version-and-update",
+    "title": "4  Introduction to npm",
+    "section": "4.8 Install a specific chalk version and update",
+    "text": "4.8 Install a specific chalk version and update\n\nYou can uninstall chalk via npm:\n$ npm uninstall chalk\nYou can install a specific version (for example version 5.1.0):\n$ npm install chalk@5.1.0\nAfter that, you can update to a later version within the same major release:\n$ npm update chalk\nThis would update chalk to version 5.6.2 as of today\n\nby changing the node_modules and package-lock.json\nwhile respecting the restrictions in package.json",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#import-the-installed-chalk-package",
+    "href": "content/Units/01-Node.js/03_npm/README.html#import-the-installed-chalk-package",
+    "title": "4  Introduction to npm",
+    "section": "4.9 Import the installed chalk package",
+    "text": "4.9 Import the installed chalk package\n\nMake sure the type is set to module in your package.json file.\n\n\"type\": \"module\"\n\nCreate a file index.js with the following content:\nimport chalk from \"chalk\";\n\nconsole.log(chalk.red(\"Hello world\"));\nAfterwards execute the program:\n$ node index.js",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#install-and-execute-the-cowsay-package",
+    "href": "content/Units/01-Node.js/03_npm/README.html#install-and-execute-the-cowsay-package",
+    "title": "4  Introduction to npm",
+    "section": "4.10 Install and execute the cowsay package",
+    "text": "4.10 Install and execute the cowsay package\n\ncowsay is a package for showing a configurable talking cow.\nnpm install cowsay\n\ninstalls the package to node_modules/cowsay\ninstalls the executable to node_modules/.bin\n\nYou can execute it with the following command:\n$ ./node_modules/.bin/cowsay \"Hello world!\"\nAn easier way is to use npx:\n$ npx cowsay \"Hello world!\"",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#what-is-in-node_modules",
+    "href": "content/Units/01-Node.js/03_npm/README.html#what-is-in-node_modules",
+    "title": "4  Introduction to npm",
+    "section": "4.11 What is in node_modules?",
+    "text": "4.11 What is in node_modules?\n\nAll packages are installed in a folder called node_modules\n\n… and their dependencies\n… and the dependencies of the dependencies …\n\nYou can take a look at all installed packages:\n$ npm list --all\nnode_modules can contain a lot of files\n\ndon’t copy it from machine to machine\nnever (!!!) add it to a Git repository",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#git-ignore-node_modules",
+    "href": "content/Units/01-Node.js/03_npm/README.html#git-ignore-node_modules",
+    "title": "4  Introduction to npm",
+    "section": "4.12 Git ignore node_modules",
+    "text": "4.12 Git ignore node_modules\n\nCreate a file called .gitignore in your Git repository.\n\nthe file must be named exactly like that\ndo not call it something like .gitignore.txt\n\nAdd the following line to .gitignore:\nnode_modules/",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#package-lock.json",
+    "href": "content/Units/01-Node.js/03_npm/README.html#package-lock.json",
+    "title": "4  Introduction to npm",
+    "section": "4.13 package-lock.json",
+    "text": "4.13 package-lock.json\n\nnpm install also creates the file package-lock.json.\nThe exact versions that were downloaded into node_modules are written to package-lock.json.\nAdd package-lock.json to your Git repository.\nAfter that, your teammates can pull the repo and call npm install.\n\nthey will get the same package versions as you\neven if a newer version is already available",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#common-problems",
+    "href": "content/Units/01-Node.js/03_npm/README.html#common-problems",
+    "title": "4  Introduction to npm",
+    "section": "4.14 Common problems",
+    "text": "4.14 Common problems\n\nnode or npm is not recognized:\n\ncheck whether Node.js is installed correctly\nrestart the terminal after installation\n\nCannot find module:\n\ncheck whether the package was installed with npm install\ncheck whether the project uses the correct package.json\n\nSyntaxError: Cannot use import statement outside a module:\n\nadd \"type\": \"module\" to package.json",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html",
+    "title": "5  Introduction to TypeScript",
+    "section": "",
+    "text": "5.1 Why TypeScript?\nYou have written JavaScript before, for plain web pages. This chapter is about what TypeScript adds on top of it, and about the handful of rules that decide whether the type system helps you or gets in your way.\nJavaScript is dynamically typed. A variable can hold anything, and a typo in a property name is only discovered when that line of code actually runs — possibly in production.\nTypeScript is a superset of JavaScript: every valid JavaScript program is a valid TypeScript program. It adds a type system that is checked before the program runs.\nEverything you already know about JavaScript still applies. What you add is the description of what the values are — and that description is gone again by the time the program runs.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#why-typescript",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#why-typescript",
+    "title": "5  Introduction to TypeScript",
+    "section": "",
+    "text": "const user = { name: \"Ada\", age: 36 };\nconsole.log(user.nmae);   // undefined - no error, no warning\n\nconst user: { name: string; age: number } = { name: \"Ada\", age: 36 };\nconsole.log(user.nmae);   // compile error: Property 'nmae' does not exist\n\n\n\nJavaScript sits inside TypeScript: TypeScript adds types, interfaces, generics, union types and strict mode, and after tsx has run only plain JavaScript is left",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#the-most-important-sentence-of-this-unit",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#the-most-important-sentence-of-this-unit",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.2 The most important sentence of this unit",
+    "text": "5.2 The most important sentence of this unit\n\nTypes exist at compile time only. At runtime there is nothing left but JavaScript.\n\nTypeScript is transpiled to JavaScript, and during that step all type information is erased. There is no typeof check against your interfaces, no reflection, no casting that verifies anything.\nconst data = JSON.parse(text) as Article;   // compiles fine\nconsole.log(data.price.toFixed(2));         // crashes if the JSON had no price\nThis matters enormously as soon as data enters the program from outside — a file, an HTTP request, a database. You have to validate it yourself. We will do this in every exercise of this unit.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#ten-rules-of-the-type-system",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#ten-rules-of-the-type-system",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.3 Ten rules of the type system",
+    "text": "5.3 Ten rules of the type system\nKeep this table close for the first few weeks. Most of the confusion in this unit comes from one of these ten lines.\n\n\n\n\n\n\n\n\nTypeScript\n\n\n\n\nType compatibility\nstructural – the shape decides, not the name (“duck typing”)\n\n\nTypes at runtime\nnone – they are erased during transpilation\n\n\nType inference\nworks almost everywhere; write types only where they help\n\n\n“no value”\nnull and undefined – prefer undefined\n\n\nUntyped escape hatch\nany (avoid it) and unknown (the safe one)\n\n\nOne of several fixed values\na union of literal types: \"a\" \\| \"b\"\n\n\nOperator overloading\ndoes not exist – write compareTo, equals, …\n\n\nConstants in a class\nonly static readonly\n\n\nGenerics at runtime\nerased, like all other types\n\n\nWhat is checked, and when\nthe compiler checks; the running program is plain JavaScript\n\n\n\nThe two lines to remember: structural typing and no types at runtime.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#basic-types",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#basic-types",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.4 Basic types",
+    "text": "5.4 Basic types\nlet done: boolean = false;\nlet count: number = 42;          // one numeric type only - no int/long/double\nlet name: string = \"Ada\";        // ' and \" are equivalent, ` allows interpolation\nlet nothing: undefined = undefined;\nlet empty: null = null;\nType inference means the annotation is usually unnecessary:\nlet count = 42;              // inferred as number\ncount = \"seven\";             // compile error\nAnnotate function parameters and return types, and leave local variables to inference.\nfunction toCelsius(fahrenheit: number): number {\n  return (fahrenheit - 32) / 1.8;\n}\n\n5.4.1 Template strings\nconst city = \"Linz\";\nconsole.log(`It is ${toCelsius(72).toFixed(1)} °C in ${city}`);",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#any-and-unknown",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#any-and-unknown",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.5 any and unknown",
+    "text": "5.5 any and unknown\nany switches the type checker off for that value. It is contagious and almost always the wrong answer:\nconst data: any = JSON.parse(text);\ndata.whatever.at.all;     // compiles - crashes at runtime\nunknown is the safe variant: you may hold the value, but you must narrow it before use.\nconst data: unknown = JSON.parse(text);\nif (typeof data === \"object\" && data !== null && \"name\" in data) {\n  // only here TypeScript lets you access data.name\n}",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#union-types-and-literal-types",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#union-types-and-literal-types",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.6 Union types and literal types",
+    "text": "5.6 Union types and literal types\nWhen a value may only be one of a few fixed alternatives, TypeScript usually uses a union of string literal types rather than an enum:\ntype Stage = \"main\" | \"tent\" | \"club\";\n\nlet stage: Stage = \"main\";\nstage = \"garden\";            // compile error\nAdvantages over enum: the value in the JSON file is the value in the code, no mapping needed, and it disappears completely at compile time.\nNarrowing a union is called a type guard:\nconst STAGES = [\"main\", \"tent\", \"club\"] as const;\n\nfunction isStage(value: string): value is Stage {\n  return (STAGES as readonly string[]).includes(value);\n}\nThat function is exactly the validation the compiler cannot do for you. You will write one in every exercise.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#strict-mode",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#strict-mode",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.7 strict mode",
+    "text": "5.7 strict mode\nThe @tsconfig/next base configuration enables strict. The two rules that will bite you:\n\nstrictNullChecks – a string can never be null or undefined. If a value may be absent, say so: string | undefined.\nnoImplicitAny – a parameter without a type annotation is an error.\n\nDo not turn these off. They are the reason for using TypeScript in the first place.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#toolchain",
+    "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#toolchain",
+    "title": "5  Introduction to TypeScript",
+    "section": "5.8 Toolchain",
+    "text": "5.8 Toolchain\n\n\n\n\n\n\n\nTool\nPurpose\n\n\n\n\ntsc\nthe TypeScript compiler: .ts → .js\n\n\ntsx\nruns a .ts file directly, without a visible compile step\n\n\ntsconfig.json\ncompiler settings (target, module system, strictness, paths)\n\n\njest + ts-jest\nunit tests written in TypeScript\n\n\n\nIn this unit we run everything with tsx and never call tsc by hand. We set a project up together in class — the steps are in the first exercise.\n\n:warning: tsx only transpiles, it does not type-check. Your editor and npx tsc --noEmit do that. A program that runs is not necessarily a program that compiles.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html",
+    "title": "6  Arrays and Functions",
+    "section": "",
+    "text": "6.1 Arrays\nArrays and functions are the two things you will touch in every program from here on. The concepts will look familiar; the notation will not. And there is one habit to unlearn: in TypeScript you work on arrays with methods, not with loops. Anything you would write as a loop with an if inside has a shorter, clearer form here.\nArrays are not fixed size and not typed at runtime:\nconst protects the binding, not the contents. You cannot point the name at a different array, but you can still change the array it points at:",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#arrays",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#arrays",
+    "title": "6  Arrays and Functions",
+    "section": "",
+    "text": "const names: string[] = [\"Ada\", \"Grace\", \"Linus\"];\nconst counts: Array&lt;number&gt; = [1, 2, 3];       // identical, rarely used\n\nnames.push(\"Alan\");\nconsole.log(names.length);   // 4\n\nconst list = [1, 2];\nlist.push(3);        // allowed\nlist = [4, 5];       // compile error\n\n6.1.1 Useful basics\nconst first = names[0];\nconst last = names.at(-1);              // undefined if empty\nconst exists = names.includes(\"Ada\");\nconst index = names.indexOf(\"Grace\");   // -1 if not found\nconst part = names.slice(1, 3);         // copy, original untouched\n\n:warning: names[99] is undefined at runtime, but TypeScript types it as string. This is a known hole in the type system. Be careful with indexed access.\n\n\n\n6.1.2 Spread and destructuring\nconst more = [...names, \"Barbara\"];              // copy plus one element\nconst merged = [...names, ...counts.map(String)];\n\nconst [head, ...tail] = names;                   // head: string, tail: string[]\nconst { name, age } = user;                      // object destructuring\nThe spread operator is the normal way to copy an array or object instead of mutating it.\n\n\n6.1.3 Tuples\nA fixed-length array with a type per position, useful when a function has to return two values at once:\ntype Entry = [key: string, value: number];\nconst entry: Entry = [\"temperature\", 21.5];\nconst [key, value] = entry;",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#functions",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#functions",
+    "title": "6  Arrays and Functions",
+    "section": "6.2 Functions",
+    "text": "6.2 Functions\nfunction add(a: number, b: number): number {\n  return a + b;\n}\nOptional and default parameters:\nfunction greet(name: string, greeting: string = \"Hello\", loud?: boolean): string {\n  const text = `${greeting}, ${name}!`;\n  return loud ? text.toUpperCase() : text;\n}\n\nThere is no method overloading: a function name exists exactly once, and a second declaration replaces the first. Use optional parameters, or a union type for the parameter, when you need to accept more than one shape of input.\n\n\n6.2.1 Functions are values\nA function is a value like any other: it can be stored in a variable, passed as an argument and returned from another function. The type of a function is written as its parameter list plus =&gt; plus its return type.\ntype Formatter = (value: number) =&gt; string;\n\nconst asEuro: Formatter = (value) =&gt; `${value.toFixed(2)} €`;\n\n\n6.2.2 Arrow functions\nconst double = (x: number): number =&gt; x * 2;      // expression body, implicit return\nconst log = (msg: string): void =&gt; {              // block body, explicit return\n  console.log(msg);\n};\nUse arrow functions for everything you pass to an array method — that is what they are for.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#the-array-methods",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#the-array-methods",
+    "title": "6  Arrays and Functions",
+    "section": "6.3 The array methods",
+    "text": "6.3 The array methods\nThree methods do most of the work. They differ in how many elements come out:\n\n\n\nfilter keeps some elements, map turns every element into a new one, reduce produces a single value\n\n\nThe rest of the table is variations on those three. All of these methods take a function as an argument (higher-order functions) and none of them modify the original array — they return a new one.\n\n\n\n\n\n\n\n\nYou want\nTypeScript\nResult\n\n\n\n\nkeep only some elements\nfilter(x =&gt; …)\nfewer elements, same type\n\n\nturn every element into something else\nmap(x =&gt; …)\nsame count, different type\n\n\nboil the array down to one value\nreduce(…)\na single value\n\n\nfind out whether any element fits\nsome(x =&gt; …)\nboolean\n\n\nfind out whether all elements fit\nevery(x =&gt; …)\nboolean\n\n\nget the first matching element\nfind(x =&gt; …)\nelement or undefined\n\n\ncount the matching elements\nfilter(x =&gt; …).length\nnumber\n\n\nsort\ntoSorted((a, b) =&gt; …)\na sorted copy\n\n\nsum\nreduce((sum, x) =&gt; sum + x, 0)\nnumber\n\n\ncopy the array\n[...source]\na new array\n\n\nindex the elements by a key\nnew Map(source.map(x =&gt; [key, x]))\nMap&lt;K, V&gt;\n\n\ngroup the elements by a key\nreduce into a Map (see below)\nMap&lt;K, V[]&gt;\n\n\n\nThe three that matter most are filter, map and reduce. Almost everything else is a special case of one of them.\nconst readings = [\n  { sensor: \"outdoor\", value: 21.5 },\n  { sensor: \"indoor\", value: 23.1 },\n  { sensor: \"outdoor\", value: 19.8 },\n];\n\nconst outdoor = readings.filter((r) =&gt; r.sensor === \"outdoor\");\nconst values = readings.map((r) =&gt; r.value);\nconst total = values.reduce((sum, v) =&gt; sum + v, 0);\nconst average = total / values.length;\nconst warmest = readings.toSorted((a, b) =&gt; b.value - a.value)[0];\nNote what find does when nothing matches: it returns undefined rather than throwing, and strict mode then forces you to handle that case before you can use the value.\n\n6.3.1 Sorting\nsort compares as strings by default — [10, 9, 1].sort() gives [1, 10, 9]. Always pass a comparator:\nnumbers.toSorted((a, b) =&gt; a - b);                      // ascending numbers\npeople.toSorted((a, b) =&gt; a.name.localeCompare(b.name)); // by name\ntoSorted returns a copy; the older sort sorts in place. Prefer toSorted, and the same for toReversed.\n\n\n6.3.2 Grouping with Map\nThere is no ready-made method for grouping. The idiom is a reduce that builds up a Map, where each key holds the array of everything that belongs to it:\nconst bySensor = readings.reduce((map, r) =&gt; {\n  const group = map.get(r.sensor) ?? [];\n  group.push(r);\n  return map.set(r.sensor, group);\n}, new Map&lt;string, typeof readings&gt;());\nA Map stores key/value pairs: get, set, has, delete, size, and it is iterable with for (const [key, value] of map). Prefer it over a plain object whenever the keys are data rather than fixed property names.\n\n\n6.3.3 Chaining\nconst report = readings\n  .filter((r) =&gt; r.value &gt; 20)\n  .map((r) =&gt; `${r.sensor}: ${r.value.toFixed(1)} °C`)\n  .join(\", \");\nEach step produces a new array. That is fine for the data sizes in this unit and much easier to read than a loop.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#loops",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#loops",
+    "title": "6  Arrays and Functions",
+    "section": "6.4 Loops",
+    "text": "6.4 Loops\nStill available where they are genuinely clearer:\nfor (const name of names) { … }          // the VALUES - this is the one you want\nfor (const key in someObject) { … }      // the KEYS - rarely what you want\nnames.forEach((name, index) =&gt; { … });   // no break, no return\nUse for…of. Use for…in almost never.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#two-operators-worth-knowing",
+    "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#two-operators-worth-knowing",
+    "title": "6  Arrays and Functions",
+    "section": "6.5 Two operators worth knowing",
+    "text": "6.5 Two operators worth knowing\nconst port = config.port ?? 3000;        // null/undefined coalescing\nconst city = user?.address?.city;        // optional chaining -&gt; undefined instead of a crash\n?? reacts only to null and undefined, unlike || which also reacts to 0 and \"\" — a classic source of bugs.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "",
+    "text": "7.1 Node.js is single-threaded\nReading a file, calling a web service or querying a database takes time. This chapter is about what your program does in the meantime — and about the two keywords, async and await, that make waiting readable.\nNode.js runs your JavaScript on a single thread. There is no second thread picking up work in the background.\nThat sounds like a limitation, and for calculation-heavy work it is. But a web server does almost no calculation: it waits — for the disk, the database, another web service. While one request waits, the single thread is free to serve the next one. This is why Node.js is fast for I/O-bound servers and a bad choice for CPU-bound work.\nThe consequence: never block the thread. A blocking call does not slow down one request, it freezes the whole server for everyone.\nWe use fs/promises exclusively in this unit.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#node.js-is-single-threaded",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#node.js-is-single-threaded",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "",
+    "text": "import { readFileSync } from \"fs\";\nimport { readFile } from \"fs/promises\";\n\nconst bad = readFileSync(\"big.json\", \"utf-8\");   // blocks the server. Never do this.\nconst good = await readFile(\"big.json\", \"utf-8\"); // frees the thread while the disk works",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#the-promise",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#the-promise",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "7.2 The Promise",
+    "text": "7.2 The Promise\nA Promise&lt;T&gt; is a value that is not there yet. It is pending, then either fulfilled with a value or rejected with an error.\nasync function loadCount(): Promise&lt;number&gt; {\n  const text = await readFile(\"data.json\", \"utf-8\");\n  return JSON.parse(text).length;      // a returned value is wrapped in a Promise\n}\n\nconst count = await loadCount();\nTwo rules:\n\nA function that uses await must be declared async.\nAn async function always returns a Promise, whatever you write in the return type.\n\n\n7.2.1 Forgetting await\nconst count = loadCount();          // Promise&lt;number&gt;, not a number\nconsole.log(count);                 // Promise { &lt;pending&gt; }\nconsole.log(count + 1);             // compile error - and it would be nonsense anyway\nNothing warns you at runtime — the program happily prints a Promise and carries on. The type checker is your only protection here, which is another reason never to switch it off.\n\n\n7.2.2 Top-level await\nBecause we use ES modules, await works directly at the top level of a file. No main() wrapper is needed:\n// src/app.ts\nconst data = await loadData();\nconsole.log(data.length);\n\n\n7.2.3 Sequential vs. parallel\nconst a = await loadA();        // waits\nconst b = await loadB();        // ... and only then starts\n\nconst [a, b] = await Promise.all([loadA(), loadB()]);   // both at once\nUse Promise.all whenever the calls do not depend on each other. Two requests that each take 200 ms then cost you 200 ms, not 400.\n\n\n7.2.4 Error handling\nA rejected promise behaves like a thrown exception:\ntry {\n  const text = await readFile(path, \"utf-8\");\n} catch (error) {\n  // error is of type `unknown` - you cannot just access error.message\n  const message = error instanceof Error ? error.message : String(error);\n  console.error(`Could not read ${path}: ${message}`);\n}\n\n:warning: In a catch block the error is unknown, not Error. Narrow it before use.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#reading-files",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#reading-files",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "7.3 Reading files",
+    "text": "7.3 Reading files\nimport { readFile } from \"fs/promises\";\n\nconst text = await readFile(\"data/lineup.json\", \"utf-8\");\nAlways pass the encoding. Without it you get a Buffer instead of a string.\n\n7.3.1 Paths\nA relative path is resolved against the working directory — wherever npm start was called from, which is not necessarily where your source file lives. Build paths explicitly:\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\nconst dataPath = join(dirName, \"..\", \"data\", \"lineup.json\");\n\n:bulb: __dirname does not exist in ES modules. The three lines above are its replacement, and you will write them in every exercise from here on.\n\n\n\n7.3.2 JSON\nconst text = await readFile(dataPath, \"utf-8\");\nconst acts = JSON.parse(text) as Act[];      // a LIE the compiler believes\nJSON.parse returns any. The as Act[] tells the compiler to stop asking questions — it verifies nothing. If the file is malformed, or a field is missing, the program crashes somewhere far away from the actual cause.\nFor file data we write ourselves, as is acceptable. For anything coming from a user or a network, validate it with a type guard, as in EX1.\n\n\n7.3.3 Writing files\nimport { writeFile } from \"fs/promises\";\n\nconst json = JSON.stringify(acts, null, 2);   // 2 = indentation, makes diffs readable\nawait writeFile(dataPath, json, \"utf-8\");\nwriteFile overwrites the whole file and creates it if it does not exist.\n\n\n7.3.4 CSV\nThere is no built-in CSV parser. Split the text yourself:\nimport { EOL } from \"os\";\n\nconst lines = text.split(EOL).filter((line) =&gt; line.trim().length &gt; 0);\nconst rows = lines.slice(1);                 // skip the header\nconst tools = rows.map((line) =&gt; parseTool(line));\n\n:warning: Use os.EOL, never a hard-coded \"\\n\" — the files in this repository are edited on Windows and on Linux. If a file may come from either, split with /\\r?\\n/ instead.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#lazy-loading-and-caching",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#lazy-loading-and-caching",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "7.4 Lazy loading and caching",
+    "text": "7.4 Lazy loading and caching\nReading a file on every request is wasteful. Read it once, on first use, and keep it:\nlet acts: Act[] | null = null;              // null = not loaded yet\n\nexport async function getActs(): Promise&lt;Act[]&gt; {\n  if (acts === null) {\n    acts = await loadActsFromFile();\n  }\n  return acts;\n}\nNote the type Act[] | null — strict mode forces you to make “not loaded yet” explicit, and to handle it. This pattern shows up in EX2 and EX3.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#timers",
+    "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#timers",
+    "title": "7  Asynchronous Programming and Files",
+    "section": "7.5 Timers",
+    "text": "7.5 Timers\nsetTimeout(() =&gt; console.log(\"later\"), 1000);        // once, after 1 s\nconst handle = setInterval(() =&gt; tick(), 1000);      // every second\nclearInterval(handle);                               // stop it - do not forget\nsetTimeout does not pause the program. The following line runs immediately; the callback runs later, when the thread is free.\nconsole.log(\"a\");\nsetTimeout(() =&gt; console.log(\"b\"), 0);\nconsole.log(\"c\");\n// prints a, c, b\nWho does what, and when:\n\n\n\nsequence diagram: app.ts logs A, hands the timer a callback, logs C, and only when the timer has expired does the callback log B\n\n\nYour code hands the callback to the timer and carries straight on. The timer is not your thread, and the callback only gets its turn once your code has finished what it was doing.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html",
+    "title": "8  HTTP, REST and Express",
+    "section": "",
+    "text": "8.1 HTTP in three minutes\nYou have used HTTP from the browser side for years. This chapter is about the other end: what a request actually contains, and how to answer one with Express.\nWe build the server step by step, and test every step with the REST Client before adding the next one. One route that you have really called beats four routes that you have not.\nA client sends a request, a server sends back a response. Both consist of a start line, headers and an optional body.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#http-in-three-minutes",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#http-in-three-minutes",
+    "title": "8  HTTP, REST and Express",
+    "section": "",
+    "text": "sequence diagram: a web client sends an HTTP request to a web server, which sends back an HTTP response\n\n\nGET /api/acts?stage=main HTTP/1.1        request line: method, path, query, version\nHost: localhost:3000                      headers\n                                          (empty line)\n                                          body - empty for GET\nHTTP/1.1 200 OK                           status line\nContent-Type: application/json            headers\n                                          (empty line)\n[{\"id\":\"a1\",\"name\":\"...\"}]                body\n\n8.1.1 Methods\n\n\n\nMethod\nMeaning\nBody\nRepeatable without side effects\n\n\n\n\nGET\nread\nno\nyes\n\n\nPOST\ncreate\nyes\nno\n\n\nPUT\nreplace completely\nyes\nyes\n\n\nPATCH\nchange partially\nyes\nyes\n\n\nDELETE\ndelete\nno\nyes\n\n\n\n\n\n8.1.2 Status codes\nUsing these correctly is a competence you are expected to have by the end of this unit.\n\n\n\n\n\n\n\n\nCode\nName\nUse it when\n\n\n\n\n200\nOK\nthe request succeeded\n\n\n201\nCreated\na POST created a resource — plus a Location header\n\n\n204\nNo Content\nsuccess, but there is nothing to return (often DELETE)\n\n\n400\nBad Request\nthe client sent nonsense (missing field, invalid value)\n\n\n404\nNot Found\nthe requested resource does not exist\n\n\n409\nConflict\nthe request contradicts the current state (already lent out)\n\n\n500\nInternal Server Error\nyour code failed\n\n\n\nRule of thumb: 4xx is the client’s fault, 5xx is yours.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#rest",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#rest",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.2 REST",
+    "text": "8.2 REST\nA resource is a thing your API is about: an act, a tool, a loan. REST says: put the resource in the path (a noun, plural), and the verb in the HTTP method.\nGET    /api/acts            all acts\nGET    /api/acts/a1         one act\nPOST   /api/acts            create one\nPUT    /api/acts/a1         replace one\nDELETE /api/acts/a1         delete one\n\nGET    /api/tools/t1/loans  the loans of one tool  (nested resource)\nNot REST — the verb belongs in the method, not the path:\nGET /api/getAllActs         no\nGET /api/acts/delete/a1     no\nPOST /api/createAct         no\n\n8.2.1 Three ways to pass data\n\n\n\n\n\n\n\n\n\nLooks like\nUse for\n\n\n\n\nRoute parameter\n/api/acts/:id\nwhich resource — required, part of the identity\n\n\nQuery parameter\n/api/acts?stage=main&sort=time\nfiltering, sorting, paging — optional\n\n\nBody\nJSON in the request body\nthe data of the resource, for POST/PUT/PATCH",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#a-first-express-server",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#a-first-express-server",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.3 A first Express server",
+    "text": "8.3 A first Express server\nnpm install express http-status-codes\nnpm install --save-dev @types/express nodemon\nsrc/app.ts:\nimport express, { Request, Response } from \"express\";\nimport { StatusCodes } from \"http-status-codes\";\n\nconst app = express();\n\napp.use(express.json());        // parses a JSON request body into req.body\n\napp.get(\"/\", (req: Request, res: Response) =&gt; {\n  res.send(\"hello world\");\n});\n\napp.listen(3000, () =&gt; console.log(\"Server listening on http://localhost:3000\"));\nnpm run dev        # nodemon restarts on every save\n\n:bulb: express.json() is easy to forget. Without it req.body is undefined on every POST, and you will look for the bug in the wrong place.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#middleware",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#middleware",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.4 Middleware",
+    "text": "8.4 Middleware\nExpress processes a request through a chain of functions. Each one may answer the request itself, or do a bit of work and hand it on to the next one with next().\n\n\n\nthe request passes through middleware 1, 2 and 3, each running some logic and calling next(), and the response travels back out through the same chain in reverse\n\n\nNote the way back: after the last one has run, the response travels out through the same chain in reverse order.\napp.use((req, res, next) =&gt; {\n  console.log(`${req.method} ${req.url}`);\n  next();                       // forget this and the request hangs forever\n});\n\napp.use(express.static(\"public\"));   // serve static files from ./public\napp.use(\"/api/acts\", actRouter);     // mount a router under a path prefix\nOrder matters. The first matching handler wins.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#routers",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#routers",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.5 Routers",
+    "text": "8.5 Routers\nDo not put your endpoints in app.ts. One router per resource, in its own file:\n// src/act/act-router.ts\nimport { Router, Request, Response } from \"express\";\nimport { StatusCodes } from \"http-status-codes\";\nimport { findAll, findById } from \"./act-service\";\n\nexport const actRouter = Router();\n\nactRouter.get(\"/\", async (req: Request, res: Response) =&gt; {\n  const stage = req.query.stage;             // string | string[] | undefined !\n  res.json(await findAll(typeof stage === \"string\" ? stage : undefined));\n});\n\nactRouter.get(\"/:id\", async (req: Request, res: Response) =&gt; {\n  const act = await findById(req.params.id);\n\n  if (act === undefined) {\n    res.status(StatusCodes.NOT_FOUND).json({ error: `No act with id ${req.params.id}` });\n    return;                                  // do NOT forget the return\n  }\n\n  res.json(act);\n});\n// src/app.ts\napp.use(\"/api/acts\", actRouter);\nThree things to note:\n\nreq.params.id is always a string. Convert and validate it yourself.\nreq.query.stage is string | string[] | ParsedQs | undefined — a client can send ?stage=a&stage=b. Narrow it before use.\nAfter res.status(...).json(...) you must return. Express does not stop the handler for you, and sending two responses is a runtime error.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#architecture-router-and-service",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#architecture-router-and-service",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.6 Architecture: router and service",
+    "text": "8.6 Architecture: router and service\nrequest  →  router  →  service  →  data (file, later: database)\n\nThe router speaks HTTP: read parameters, validate input, choose the status code. It contains no business logic.\nThe service contains the business logic and loads/stores the data. It knows nothing about HTTP — no Request, no Response, no status codes.\n\nThat separation is what makes the database unit possible: there you replace the data access inside the service with SQLite, and the router does not change at all.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#dtos",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#dtos",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.7 DTOs",
+    "text": "8.7 DTOs\nThe objects you send over the wire are not your domain objects. A Tool class has methods and maybe internal state; what goes into the JSON is a plain, flat object — a Data Transfer Object.\nexport type ToolDto = {\n  id: string;\n  name: string;\n  category: Category;\n  available: boolean;\n};\n\nexport function toToolDto(tool: Tool): ToolDto {\n  return { id: tool.id, name: tool.name, category: tool.category, available: tool.isAvailable };\n}\nWhy bother: the DTO is your API’s contract. It stays stable while the model behind it changes, and it lets you leave internal fields out.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#testing-with-the-rest-client",
+    "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#testing-with-the-rest-client",
+    "title": "8  HTTP, REST and Express",
+    "section": "8.8 Testing with the REST Client",
+    "text": "8.8 Testing with the REST Client\nPut a requests.http file next to your source and use the VS Code REST Client extension. ### separates the requests, and each one gets a Send Request link.\n@host = http://localhost:3000\n\n### all acts\nGET {{host}}/api/acts\n\n### filtered\nGET {{host}}/api/acts?stage=main&sort=time\n\n### one act\nGET {{host}}/api/acts/a1\n\n### create a loan\nPOST {{host}}/api/loans\nContent-Type: application/json\n\n{\n  \"toolId\": \"t1\",\n  \"borrower\": \"Ada Lovelace\"\n}\nKeep this file up to date — in the exercises it is part of the hand-in.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html",
+    "title": "9  Objects, Types and Classes",
+    "section": "",
+    "text": "9.1 Object literals\nYou have met classes, inheritance and interfaces before. This chapter is about the parts TypeScript does its own way — and about when a class is the wrong tool and a plain type is the right one.\nIn JavaScript an object is created without a class. It is a bag of key/value pairs:\nTypeScript infers the type of act from the literal. You can also name that type:\nThis is the workhorse of the unit. Most “objects” in our APIs are plain data with a type — no class needed.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#object-literals",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#object-literals",
+    "title": "9  Objects, Types and Classes",
+    "section": "",
+    "text": "const act = {\n  id: \"a01\",\n  name: \"Kernel Panic\",\n  durationMinutes: 60,\n};\n\nconsole.log(act.name);\nconsole.log(act[\"name\"]); // the same thing\n\ntype Act = {\n  id: string;\n  name: string;\n  durationMinutes: number;\n  encore?: boolean; // optional -&gt; boolean | undefined\n  readonly createdAt: string; // may only be set once, when the object is created\n};",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#structural-typing-duck-typing",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#structural-typing-duck-typing",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.2 Structural typing (duck typing)",
+    "text": "9.2 Structural typing (duck typing)\nThe single most important rule of the type system. TypeScript compares types by their shape, not by their name. Two types with the same members are the same type, even if they were declared separately and never mention each other.\ntype Point = { x: number; y: number };\ntype Coordinate = { x: number; y: number };\n\nconst p: Point = { x: 1, y: 2 };\nconst c: Coordinate = p; // fine. Same shape = same type.\nNothing has to implement anything. If it walks like a duck, it is a duck:\ntype Named = { name: string };\n\nfunction greet(thing: Named) {\n  console.log(`Hello ${thing.name}`);\n}\n\nconst user = { name: \"Ada\", age: 36 };\ngreet(user); // fine - it HAS a name\ngreet(new Tool(\"t1\", \"Hammer\")); // fine, if Tool has a `name` property\n\n9.2.1 Excess property check\nThere is one exception that confuses everyone once:\nconst named: Named = { name: \"Ada\", age: 36 }; // ERROR: 'age' does not exist in 'Named'\n\nconst thing = { name: \"Ada\", age: 36 };\nconst named2: Named = thing; // fine!\nA literal assigned directly is checked strictly, because extra properties there are almost always a typo. A value that already has a type is only checked for compatibility.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#type-or-interface",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#type-or-interface",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.3 type or interface?",
+    "text": "9.3 type or interface?\nBoth describe a shape, and for objects they are nearly interchangeable.\n\n\n\n\ntype\ninterface\n\n\n\n\nObjects\nyes\nyes\n\n\nUnions (\"a\" \\| \"b\")\nyes\nno\n\n\nTuples, function types\nyes\nawkward\n\n\nCan be re-opened / merged\nno\nyes\n\n\nextends\nvia &\nyes\n\n\n\nConvention for this unit: use type everywhere. Use interface only when you really want a contract that several classes implement. Do not prefix interface names with I; TypeScript does not do that.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#classes",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#classes",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.4 Classes",
+    "text": "9.4 Classes\nThe syntax will look familiar. Three details are worth memorising, because they differ from what you would expect.\nexport class Tool {\n  // 1. no access modifier means PUBLIC - there is no \"internal\"\n  readonly id: string;\n  readonly name: string;\n  private timesLent = 0; // type inferred from the initialiser\n\n  static readonly MAX_LOAN_DAYS = 14; // 2. no `const` in a class - use `static readonly`\n\n  constructor(id: string, name: string) {\n    this.id = id;\n    this.name = name;\n  }\n\n  // 3. `get` is a method with a keyword, and it is called WITHOUT parentheses\n  get isPopular(): boolean {\n    return this.timesLent &gt; 10;\n  }\n\n  lend(): void {\n    this.timesLent++;\n  }\n}\n\nconst tool = new Tool(\"t1\", \"Cordless drill\");\nconsole.log(tool.isPopular); // no ()\n\n9.4.1 Parameter properties\nThe constructor boilerplate above has a short form:\nexport class Tool {\n  constructor(\n    readonly id: string,\n    readonly name: string,\n    private timesLent = 0\n  ) {}\n}\nThe modifier in the parameter list declares the field and assigns it. There is no other short form for this, and you will see it in a lot of TypeScript code.\n\n\n9.4.2 private is not a security feature\nclass A {\n  private secret = 42; // compile-time only - visible at runtime\n  #reallySecret = 43; // truly private, enforced by the JavaScript runtime\n}\nprivate is erased with everything else during transpilation. (a as any).secret reads it without complaint. For our purposes private is fine — just do not mistake it for protection.\n\n\n9.4.3 Static factory methods\nA constructor cannot fail gracefully, cannot be async and cannot have overloads. The usual answer is a static factory:\nexport class Tool {\n  private constructor(readonly id: string, readonly name: string) {}\n\n  /** Returns undefined instead of throwing when the line is malformed. */\n  static fromCsvLine(line: string): Tool | undefined {\n    const [id, name] = line.split(\";\");\n    return id && name ? new Tool(id, name) : undefined;\n  }\n}\nNote the private constructor: it forces everyone through the factory, so the validation cannot be skipped. You will use this pattern in EX3.\n\n\n9.4.4 Inheritance\nclass FullDayLoan extends Loan {\n  constructor(id: string, toolId: string) {\n    super(id, toolId); // must be called first\n  }\n\n  override describe(): string {\n    // `override` is optional but recommended\n    return `${super.describe()} (full day)`;\n  }\n}\nabstract class, abstract members and implements all exist and behave as you expect. instanceof works at runtime, because classes — unlike interfaces and types — do survive transpilation.\nWe use inheritance sparingly in this unit. Prefer a union of types with a discriminating field:\ntype Loan =\n  | { kind: \"open\"; toolId: string; since: string }\n  | { kind: \"returned\"; toolId: string; since: string; until: string };\n\nfunction describe(loan: Loan): string {\n  // TypeScript narrows on `kind` - inside each branch the type is exact\n  return loan.kind === \"returned\"\n    ? `returned on ${loan.until}`\n    : `open since ${loan.since}`;\n}\nThis is a discriminated union, and it replaces a lot of small class hierarchies.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#classes-vs.-plain-objects",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#classes-vs.-plain-objects",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.5 Classes vs. plain objects",
+    "text": "9.5 Classes vs. plain objects\n\n\n\n\n\n\n\nUse a class when\nUse a type when\n\n\n\n\nthere is behaviour, not just data\nit is pure data\n\n\nthere are invariants to protect\nit comes from JSON or goes into JSON\n\n\nyou need instanceof\nyou need a DTO\n\n\n\nRemember from 03_async-and-files:\nconst tools = JSON.parse(text) as Tool[]; // NOT Tool instances - no methods!\nJSON.parse produces plain objects. as Tool[] only silences the compiler; calling a method on one of them crashes at runtime. If you want real instances, construct them:\nconst tools = (JSON.parse(text) as ToolDto[]).map((dto) =&gt; Tool.fromDto(dto));\nThis is the toDto/fromDto pattern, and it is the heart of EX3.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#map-and-set",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#map-and-set",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.6 Map and Set",
+    "text": "9.6 Map and Set\nconst byId = new Map&lt;string, Tool&gt;();\nbyId.set(tool.id, tool);\nconst found = byId.get(\"t1\"); // Tool | undefined\nbyId.has(\"t1\");\nbyId.delete(\"t1\");\nbyId.size; // a property, not a method\n\nfor (const [id, tool] of byId) {\n  // ...\n}\nconst all = [...byId.values()];\nA Map holds key/value pairs, a Set holds each value at most once. Build a Map from an array in one step:\nconst byId = new Map(tools.map((tool) =&gt; [tool.id, tool]));\n\n:warning: A plain object ({}) also maps keys to values, but its keys are always strings, it inherits properties from Object.prototype, and it has no size. Use Map whenever the keys are data.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#equality",
+    "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#equality",
+    "title": "9  Objects, Types and Classes",
+    "section": "9.7 Equality",
+    "text": "9.7 Equality\n\"1\" == 1; // true  - == converts types. Never use it.\n\"1\" === 1; // false - === compares type and value. Always use this.\n\n({ a: 1 } === { a: 1 }); // false - reference comparison\nThere is no operator overloading, and no built-in convention for value equality. If you need it, write an equals method and call it explicitly.",
+    "crumbs": [
+      "TypeScript and Express",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html",
+    "title": "10  SQLite",
+    "section": "",
+    "text": "10.1 Why SQLite\nUntil now our data lived in files that we read completely into memory and wrote back completely on every change. That works for twelve tools. It does not work for a real application: two requests writing at the same time lose data, every query is a full scan, and there is nothing to enforce that a loan points at a tool that actually exists.\nA database solves all three. We use SQLite.\nSQLite is not a server. It is a file plus a library that reads and writes it. There is nothing to install, nothing to configure, no port, no password.\nIt is the most widely deployed database in the world — every phone in the room contains several. For this unit it is perfect: the whole database is a file you can delete and recreate.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
+    "title": "10  SQLite",
+    "section": "",
+    "text": "SQLite\nMySQL / PostgreSQL\n\n\n\n\nRuns as\na library inside your process\na separate server process\n\n\nThe database is\none file (workshop.db)\na directory managed by the server\n\n\nSetup\nnone\ninstall, configure, create users\n\n\nConcurrent writers\none at a time\nmany\n\n\nGood for\nembedded apps, tests, small services\nmulti-user production systems\n\n\n\n\n\n:bulb: Install the SQLite Viewer extension for VS Code so you can look inside the .db file while you work.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#the-driver",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#the-driver",
+    "title": "10  SQLite",
+    "section": "10.2 The driver",
+    "text": "10.2 The driver\nNode.js ships SQLite built in since version 22, as node:sqlite. No npm install, no native compilation:\nimport { DatabaseSync } from \"node:sqlite\";\n\nconst db = new DatabaseSync(\"data/workshop.db\");\n\n:warning: node:sqlite is synchronous — DatabaseSync says so in its name. This contradicts what the chapter on asynchronous programming said about never blocking the thread, and for a network database it would be unacceptable. For a local file it is a deliberate trade-off: the operations are measured in microseconds, and the API is far simpler.\nWe still declare our service functions async. Then the routers do not change, and the service can be swapped for an asynchronous driver later without touching anything else.\n\nOther commonly used drivers are better-sqlite3 (synchronous, faster, needs a native build) and sqlite3 + sqlite (asynchronous). Both work; both have to be compiled during npm install, which is exactly the problem node:sqlite removes.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#sql-we-need",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#sql-we-need",
+    "title": "10  SQLite",
+    "section": "10.3 SQL we need",
+    "text": "10.3 SQL we need\n\n10.3.1 Creating a schema\nCREATE TABLE IF NOT EXISTS tools (\n  id        TEXT PRIMARY KEY,\n  name      TEXT NOT NULL,\n  category  TEXT NOT NULL CHECK (category IN ('power', 'hand', 'measuring', 'garden')),\n  condition TEXT NOT NULL CHECK (condition IN ('good', 'worn', 'broken'))\n);\n\nCREATE TABLE IF NOT EXISTS loans (\n  id       TEXT PRIMARY KEY,\n  tool_id  TEXT NOT NULL REFERENCES tools (id),\n  borrower TEXT NOT NULL,\n  from_day TEXT NOT NULL,\n  until    TEXT NOT NULL,\n  state    TEXT NOT NULL CHECK (state IN ('open', 'returned'))\n);\nThree things the database now guarantees for you, which no amount of TypeScript could:\n\nPRIMARY KEY — no two tools with the same id.\nCHECK (… IN …) — the same constraint your union types express, but enforced at runtime.\nREFERENCES tools (id) — a loan cannot point at a tool that does not exist.\n\n\n:warning: SQLite only enforces foreign keys if you ask it to, per connection: db.exec(\"PRAGMA foreign_keys = ON\"). Forgetting this is the classic SQLite mistake.\n\nSQLite has very few types: TEXT, INTEGER, REAL, BLOB, NULL. There is no date type and no boolean. Store dates as TEXT in the format YYYY-MM-DD — it sorts correctly as a string — and booleans as INTEGER 0/1.\nfrom and to are SQL keywords, which is why the column above is called from_day.\n\n\n10.3.2 Queries\nSELECT * FROM tools ORDER BY id;\nSELECT * FROM tools WHERE category = ?;\nSELECT * FROM tools WHERE id = ?;\n\nINSERT INTO loans (id, tool_id, borrower, from_day, until, state) VALUES (?, ?, ?, ?, ?, ?);\nUPDATE loans SET state = 'returned' WHERE id = ?;\nDELETE FROM loans WHERE id = ?;\nFiltering in WHERE instead of with filter in TypeScript is the point of using a database: the work happens where the data is, and an index can help.\n-- the tools that are not lent out right now\nSELECT t.* FROM tools t\nWHERE t.condition &lt;&gt; 'broken'\n  AND NOT EXISTS (SELECT 1 FROM loans l WHERE l.tool_id = t.id AND l.state = 'open');",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
+    "title": "10  SQLite",
+    "section": "10.4 Using the driver",
+    "text": "10.4 Using the driver\n\n10.4.1 Statements without a result\ndb.exec(\"PRAGMA foreign_keys = ON\");\ndb.exec(schemaSql); // several statements at once\n\n\n10.4.2 Prepared statements\nconst selectAll = db.prepare(\"SELECT * FROM tools ORDER BY id\");\nconst rows = selectAll.all(); // an array of rows\n\nconst selectOne = db.prepare(\"SELECT * FROM tools WHERE id = ?\");\nconst row = selectOne.get(\"t01\"); // one row, or undefined\n\nconst insert = db.prepare(\"INSERT INTO loans (id, tool_id) VALUES (?, ?)\");\nconst result = insert.run(\"l05\", \"t02\"); // { changes, lastInsertRowid }\nconsole.log(result.changes); // 1\nchanges tells you how many rows were affected — that is how you distinguish “updated” from “there was no such row”, and therefore how you decide between 200 and 404:\nconst result = db.prepare(\"UPDATE loans SET state = 'returned' WHERE id = ?\").run(id);\nif (result.changes === 0) {\n  // no loan with that id\n}\n\n\n10.4.3 Never build SQL with string concatenation\n// NEVER do this. This is an SQL injection.\ndb.exec(`SELECT * FROM tools WHERE id = '${userInput}'`);\n\n// Always do this.\ndb.prepare(\"SELECT * FROM tools WHERE id = ?\").get(userInput);\nWith ? placeholders the value is passed separately from the statement and can never be interpreted as SQL. A user who sends t01'; DROP TABLE tools; -- as an id then simply gets “not found”.\n\n\n10.4.4 Rows are not your objects\nconst row = db.prepare(\"SELECT * FROM tools WHERE id = ?\").get(\"t01\");\nrow has the type unknown-ish and, at runtime, is a plain object whose keys are the column names — tool_id, not toolId. It has no methods. This is the same situation as JSON.parse, and it has the same answer: a row type plus a mapping function.\ntype ToolRow = {\n  id: string;\n  name: string;\n  category: string;\n  condition: string;\n};\n\nfunction toTool(row: ToolRow): Tool | undefined {\n  return Tool.fromParts(row.id, row.name, row.category, row.condition);\n}\nNote that category is typed as string here, not as Category. The database CHECK constraint makes it very likely to be valid, but the driver cannot prove it — so we validate on the way in, exactly as we did with the CSV file.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#transactions",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#transactions",
+    "title": "10  SQLite",
+    "section": "10.5 Transactions",
+    "text": "10.5 Transactions\nSeveral statements that must all succeed or all fail:\ndb.exec(\"BEGIN\");\ntry {\n  insertLoan.run(/* ... */);\n  updateTool.run(/* ... */);\n  db.exec(\"COMMIT\");\n} catch (error) {\n  db.exec(\"ROLLBACK\");\n  throw error;\n}\nWe need this only for the seeding script in the exercise, but it is the reason databases exist: either the whole change happens, or none of it.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
+    "title": "10  SQLite",
+    "section": "10.6 Where the connection lives",
+    "text": "10.6 Where the connection lives\nOpen the database once for the whole application, not per request:\n// src/db.ts\nimport { DatabaseSync } from \"node:sqlite\";\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\n\nexport const db = new DatabaseSync(join(dirName, \"..\", \"data\", \"workshop.db\"));\ndb.exec(\"PRAGMA foreign_keys = ON\");\nThe module body runs once, the first time the module is imported. That is the simplest singleton there is.\n\n:bulb: Do not commit the .db file. Add it to .gitignore and commit the schema plus a seeding script instead — then anyone can recreate the database from scratch, which is exactly what you want in a repository.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  }
+]

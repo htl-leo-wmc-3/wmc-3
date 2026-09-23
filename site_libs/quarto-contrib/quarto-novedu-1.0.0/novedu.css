@@ -1,0 +1,30 @@
+/* Buttons in the {{< tutor >}} and {{< quiz >}} callouts — HTML output only.
+   (The PDF gets its styling from Quarto's callout support.)
+   Green for the tutor (a `tip` callout), blue for the quiz (a `note`). */
+
+.novedu-cta p {
+  margin: 0;
+}
+
+.novedu-cta a {
+  display: inline-block;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.4rem;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.novedu-cta-tutor a {
+  background: var(--bs-success, #198754);
+}
+
+.novedu-cta-quiz a {
+  background: var(--bs-primary, #2780e3);
+}
+
+.novedu-cta a:hover,
+.novedu-cta a:focus {
+  filter: brightness(1.08);
+  text-decoration: none;
+}

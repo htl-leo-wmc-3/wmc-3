@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 330" width="660" height="330" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="JavaScript sits inside TypeScript; TypeScript adds a type system, and after transpiling only plain JavaScript is left">
+<rect width="660" height="330" fill="#FFFFFF"/>
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#666666"/></marker></defs>
+<circle cx="170" cy="170" r="128" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="2"/>
+<circle cx="170" cy="202" r="80" fill="#F6E7C1" stroke="#C8A742" stroke-width="2"/>
+<text x="170" y="82" text-anchor="middle" font-size="18" font-weight="700" fill="#1F3A5F">TypeScript</text>
+<text x="170" y="103" text-anchor="middle" font-size="11" fill="#1F3A5F">types &#183; interfaces &#183; generics</text>
+<text x="170" y="118" text-anchor="middle" font-size="11" fill="#1F3A5F">union types &#183; strict</text>
+<text x="170" y="195" text-anchor="middle" font-size="15" font-weight="700" fill="#6B5410">JavaScript</text>
+<text x="170" y="216" text-anchor="middle" font-size="10.5" fill="#6B5410">variables &#183; functions</text>
+<text x="170" y="231" text-anchor="middle" font-size="10.5" fill="#6B5410">classes &#183; arrays &#183; await</text>
+<line x1="312" y1="170" x2="432" y2="170" stroke="#666666" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="372.0" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#222222" font-family="Consolas, monospace">tsx</text>
+<text x="372.0" y="190" text-anchor="middle" font-size="11.5" fill="#6B7280">types are erased</text>
+<rect x="452" y="120" width="152" height="100" rx="8" fill="#F6E7C1" stroke="#C8A742" stroke-width="2"/>
+<text x="528.0" y="166" text-anchor="middle" font-size="16" font-weight="700" fill="#6B5410">JavaScript</text>
+<text x="528.0" y="190" text-anchor="middle" font-size="11.5" fill="#6B5410">no types left</text>
+<text x="528.0" y="242" text-anchor="middle" font-size="11.5" fill="#6B7280">this is what Node.js runs</text>
+<text x="330.0" y="314" text-anchor="middle" font-size="12.5" fill="#6B7280">Every JavaScript program is already a valid TypeScript program. The reverse is not true.</text>
+</svg>

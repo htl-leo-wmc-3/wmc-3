@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 762 384" width="762" height="384" font-family="Segoe UI, Helvetica, Arial, sans-serif" role="img" aria-label="filter keeps fewer elements, map turns every element into a new one, reduce produces a single value">
+<rect width="762" height="384" fill="#FFFFFF"/>
+<defs><marker id="ar" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><polygon points="0 0, 9 3.5, 0 7" fill="#666666"/></marker></defs>
+<text x="26" y="34" font-size="15" font-weight="600" fill="#222222">Three ways to work on an array</text>
+<text x="26" y="56" font-size="12.5" fill="#666666">Each of them returns something new — the array on the left is never changed.</text>
+<rect x="26" y="84" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="52.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">21.5</text>
+<rect x="84" y="84" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="110.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">23.1</text>
+<rect x="142" y="84" width="52" height="38" rx="6" fill="#F0F0F0" stroke="#CCCCCC" stroke-width="1.5"/>
+<text x="168.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#A0A0A0" font-family="Consolas, monospace">19.8</text>
+<rect x="200" y="84" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="226.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">25.6</text>
+<rect x="258" y="84" width="52" height="38" rx="6" fill="#F0F0F0" stroke="#CCCCCC" stroke-width="1.5"/>
+<text x="284.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#A0A0A0" font-family="Consolas, monospace">18.2</text>
+<line x1="322" y1="103.0" x2="432" y2="103.0" stroke="#666666" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="377.0" y="92.0" text-anchor="middle" font-size="15" font-weight="600" fill="#222222" font-family="Consolas, monospace">filter</text>
+<text x="377.0" y="127.0" text-anchor="middle" font-size="11.5" fill="#666666" font-family="Consolas, monospace">v &gt; 20</text>
+<rect x="446" y="84" width="52" height="38" rx="6" fill="#D8E8D0" stroke="#6A9E5B" stroke-width="1.5"/>
+<text x="472.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#2F4F26" font-family="Consolas, monospace">21.5</text>
+<rect x="504" y="84" width="52" height="38" rx="6" fill="#D8E8D0" stroke="#6A9E5B" stroke-width="1.5"/>
+<text x="530.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#2F4F26" font-family="Consolas, monospace">23.1</text>
+<rect x="562" y="84" width="52" height="38" rx="6" fill="#D8E8D0" stroke="#6A9E5B" stroke-width="1.5"/>
+<text x="588.0" y="108.0" text-anchor="middle" font-size="13.5" fill="#2F4F26" font-family="Consolas, monospace">25.6</text>
+<text x="446" y="144" font-size="12" fill="#666666">fewer elements, same type</text>
+<rect x="26" y="188" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="52.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">21.5</text>
+<rect x="84" y="188" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="110.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">23.1</text>
+<rect x="142" y="188" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="168.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">19.8</text>
+<rect x="200" y="188" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="226.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">25.6</text>
+<rect x="258" y="188" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="284.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">18.2</text>
+<line x1="322" y1="207.0" x2="432" y2="207.0" stroke="#666666" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="377.0" y="196.0" text-anchor="middle" font-size="15" font-weight="600" fill="#222222" font-family="Consolas, monospace">map</text>
+<text x="377.0" y="231.0" text-anchor="middle" font-size="11.5" fill="#666666" font-family="Consolas, monospace">Math.round(v)</text>
+<rect x="446" y="188" width="52" height="38" rx="6" fill="#E2DDEC" stroke="#8377A9" stroke-width="1.5"/>
+<text x="472.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#3D3357" font-family="Consolas, monospace">22</text>
+<rect x="504" y="188" width="52" height="38" rx="6" fill="#E2DDEC" stroke="#8377A9" stroke-width="1.5"/>
+<text x="530.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#3D3357" font-family="Consolas, monospace">23</text>
+<rect x="562" y="188" width="52" height="38" rx="6" fill="#E2DDEC" stroke="#8377A9" stroke-width="1.5"/>
+<text x="588.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#3D3357" font-family="Consolas, monospace">20</text>
+<rect x="620" y="188" width="52" height="38" rx="6" fill="#E2DDEC" stroke="#8377A9" stroke-width="1.5"/>
+<text x="646.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#3D3357" font-family="Consolas, monospace">26</text>
+<rect x="678" y="188" width="52" height="38" rx="6" fill="#E2DDEC" stroke="#8377A9" stroke-width="1.5"/>
+<text x="704.0" y="212.0" text-anchor="middle" font-size="13.5" fill="#3D3357" font-family="Consolas, monospace">18</text>
+<text x="446" y="248" font-size="12" fill="#666666">same number of elements, new values</text>
+<rect x="26" y="292" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="52.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">21.5</text>
+<rect x="84" y="292" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="110.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">23.1</text>
+<rect x="142" y="292" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="168.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">19.8</text>
+<rect x="200" y="292" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="226.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">25.6</text>
+<rect x="258" y="292" width="52" height="38" rx="6" fill="#DCE6F1" stroke="#4A7EBB" stroke-width="1.5"/>
+<text x="284.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#1F3A5F" font-family="Consolas, monospace">18.2</text>
+<line x1="322" y1="311.0" x2="432" y2="311.0" stroke="#666666" stroke-width="1.5" marker-end="url(#ar)"/>
+<text x="377.0" y="300.0" text-anchor="middle" font-size="15" font-weight="600" fill="#222222" font-family="Consolas, monospace">reduce</text>
+<text x="377.0" y="335.0" text-anchor="middle" font-size="11.5" fill="#666666" font-family="Consolas, monospace">sum + v</text>
+<rect x="446" y="292" width="52" height="38" rx="6" fill="#F6E7C1" stroke="#C8A742" stroke-width="1.5"/>
+<text x="472.0" y="316.0" text-anchor="middle" font-size="13.5" fill="#6B5410" font-family="Consolas, monospace">108.2</text>
+<text x="446" y="352" font-size="12" fill="#666666">one single value</text>
+</svg>

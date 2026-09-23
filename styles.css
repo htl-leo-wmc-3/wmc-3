@@ -1,0 +1,16 @@
+/* Small custom tweaks for the website (HTML) output only.
+   The PDF ignores this file — style the PDF via LaTeX options in _quarto.yml. */
+
+/* Give code blocks a touch more breathing room. */
+pre.sourceCode {
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+/* Center images and keep them inside the text column. */
+p img,
+figure img {
+  display: block;
+  max-width: 100%;
+  margin: 0.5rem auto;
+}
