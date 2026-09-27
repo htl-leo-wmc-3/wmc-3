@@ -339,6 +339,17 @@
     ]
   },
   {
+    "objectID": "content/Units/01-Node.js/03_npm/README.html#check-yourself",
+    "href": "content/Units/01-Node.js/03_npm/README.html#check-yourself",
+    "title": "4  Introduction to npm",
+    "section": "4.15 Check yourself",
+    "text": "4.15 Check yourself\nTrain for Node.js and npm with the practice quiz on Node.js and npm. Each attempt asks 6 short questions, so you can take it as often as you like. The quiz is anonymous: it is for your own training, and your teacher cannot see who gave which answer.\n\n\n\n\n\n\nNotePractice quiz on Node.js and npm\n\n\n\n\n▶ Take the quiz on app.novedu.at",
+    "crumbs": [
+      "Node.js",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
+    ]
+  },
+  {
     "objectID": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html",
     "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html",
     "title": "5  Introduction to TypeScript",
