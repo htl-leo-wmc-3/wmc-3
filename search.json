@@ -112,7 +112,7 @@
     "href": "content/Units/01-Node.js/02_node/README.html#what-is-node.js",
     "title": "3  Introduction to Node.js",
     "section": "3.3 What is Node.js?",
-    "text": "3.3 What is Node.js?\n\na JavaScript runtime\n\nexecutes JavaScript outside of a web browser\n\nmain components:\n\nV8 JavaScript engine\nAPI\n\n\n:bulb: Please note: Node.js is neither a programming language nor a framework!",
+    "text": "3.3 What is Node.js?\n\na JavaScript runtime\n\nexecutes JavaScript outside of a web browser\n\nmain components:\n\nV8 JavaScript engine\nAPI\n\n\n💡 Please note: Node.js is neither a programming language nor a framework!",
     "crumbs": [
       "Node.js",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Introduction to Node.js</span>"
@@ -233,7 +233,7 @@
     "href": "content/Units/01-Node.js/03_npm/README.html#install-the-chalk-package",
     "title": "4  Introduction to npm",
     "section": "4.5 Install the chalk package",
-    "text": "4.5 Install the chalk package\n\nchalk is a package for formatting your console output.\nYou can install it via npm:\n$ npm install chalk\n\n\n:bulb: The exact version depends on the current npm registry. At the time this material was updated, the latest release is 6.0.0, so the version shown below may differ slightly in your environment.\n\n\nYou can check the installed chalk version:\n$ npm list\n&gt; npm-demo@1.0.0 /home/mh/node/npm-demo\n&gt; └── chalk@6.0.0\nYou will also find a new dependency in package.json:\n{\n  \"name\": \"npm-demo\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"author\": \"John Snow\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"chalk\": \"^6.0.0\"\n  }\n}",
+    "text": "4.5 Install the chalk package\n\nchalk is a package for formatting your console output.\nYou can install it via npm:\n$ npm install chalk\n\n\n💡 The exact version depends on the current npm registry. At the time this material was updated, the latest release is 6.0.0, so the version shown below may differ slightly in your environment.\n\n\nYou can check the installed chalk version:\n$ npm list\n&gt; npm-demo@1.0.0 /home/mh/node/npm-demo\n&gt; └── chalk@6.0.0\nYou will also find a new dependency in package.json:\n{\n  \"name\": \"npm-demo\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"author\": \"John Snow\",\n  \"license\": \"ISC\",\n  \"dependencies\": {\n    \"chalk\": \"^6.0.0\"\n  }\n}",
     "crumbs": [
       "Node.js",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Introduction to `npm`</span>"
@@ -431,7 +431,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#toolchain",
     "title": "5  Introduction to TypeScript",
     "section": "5.8 Toolchain",
-    "text": "5.8 Toolchain\n\n\n\n\n\n\n\nTool\nPurpose\n\n\n\n\ntsc\nthe TypeScript compiler: .ts → .js\n\n\ntsx\nruns a .ts file directly, without a visible compile step\n\n\ntsconfig.json\ncompiler settings (target, module system, strictness, paths)\n\n\njest + ts-jest\nunit tests written in TypeScript\n\n\n\nIn this unit we run everything with tsx and never call tsc by hand. We set a project up together in class — the steps are in the first exercise.\n\n:warning: tsx only transpiles, it does not type-check. Your editor and npx tsc --noEmit do that. A program that runs is not necessarily a program that compiles.",
+    "text": "5.8 Toolchain\n\n\n\n\n\n\n\nTool\nPurpose\n\n\n\n\ntsc\nthe TypeScript compiler: .ts → .js\n\n\ntsx\nruns a .ts file directly, without a visible compile step\n\n\ntsconfig.json\ncompiler settings (target, module system, strictness, paths)\n\n\njest + ts-jest\nunit tests written in TypeScript\n\n\n\nIn this unit we run everything with tsx and never call tsc by hand. We set a project up together in class — the steps are in the first exercise.\n\n⚠️ tsx only transpiles, it does not type-check. Your editor and npx tsc --noEmit do that. A program that runs is not necessarily a program that compiles.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
@@ -453,7 +453,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html#arrays",
     "title": "6  Arrays and Functions",
     "section": "",
-    "text": "const names: string[] = [\"Ada\", \"Grace\", \"Linus\"];\nconst counts: Array&lt;number&gt; = [1, 2, 3];       // identical, rarely used\n\nnames.push(\"Alan\");\nconsole.log(names.length);   // 4\n\nconst list = [1, 2];\nlist.push(3);        // allowed\nlist = [4, 5];       // compile error\n\n6.1.1 Useful basics\nconst first = names[0];\nconst last = names.at(-1);              // undefined if empty\nconst exists = names.includes(\"Ada\");\nconst index = names.indexOf(\"Grace\");   // -1 if not found\nconst part = names.slice(1, 3);         // copy, original untouched\n\n:warning: names[99] is undefined at runtime, but TypeScript types it as string. This is a known hole in the type system. Be careful with indexed access.\n\n\n\n6.1.2 Spread and destructuring\nconst more = [...names, \"Barbara\"];              // copy plus one element\nconst merged = [...names, ...counts.map(String)];\n\nconst [head, ...tail] = names;                   // head: string, tail: string[]\nconst { name, age } = user;                      // object destructuring\nThe spread operator is the normal way to copy an array or object instead of mutating it.\n\n\n6.1.3 Tuples\nA fixed-length array with a type per position, useful when a function has to return two values at once:\ntype Entry = [key: string, value: number];\nconst entry: Entry = [\"temperature\", 21.5];\nconst [key, value] = entry;",
+    "text": "const names: string[] = [\"Ada\", \"Grace\", \"Linus\"];\nconst counts: Array&lt;number&gt; = [1, 2, 3];       // identical, rarely used\n\nnames.push(\"Alan\");\nconsole.log(names.length);   // 4\n\nconst list = [1, 2];\nlist.push(3);        // allowed\nlist = [4, 5];       // compile error\n\n6.1.1 Useful basics\nconst first = names[0];\nconst last = names.at(-1);              // undefined if empty\nconst exists = names.includes(\"Ada\");\nconst index = names.indexOf(\"Grace\");   // -1 if not found\nconst part = names.slice(1, 3);         // copy, original untouched\n\n⚠️ names[99] is undefined at runtime, but TypeScript types it as string. This is a known hole in the type system. Be careful with indexed access.\n\n\n\n6.1.2 Spread and destructuring\nconst more = [...names, \"Barbara\"];              // copy plus one element\nconst merged = [...names, ...counts.map(String)];\n\nconst [head, ...tail] = names;                   // head: string, tail: string[]\nconst { name, age } = user;                      // object destructuring\nThe spread operator is the normal way to copy an array or object instead of mutating it.\n\n\n6.1.3 Tuples\nA fixed-length array with a type per position, useful when a function has to return two values at once:\ntype Entry = [key: string, value: number];\nconst entry: Entry = [\"temperature\", 21.5];\nconst [key, value] = entry;",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Arrays and Functions</span>"
@@ -530,7 +530,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#the-promise",
     "title": "7  Asynchronous Programming and Files",
     "section": "7.2 The Promise",
-    "text": "7.2 The Promise\nA Promise&lt;T&gt; is a value that is not there yet. It is pending, then either fulfilled with a value or rejected with an error.\nasync function loadCount(): Promise&lt;number&gt; {\n  const text = await readFile(\"data.json\", \"utf-8\");\n  return JSON.parse(text).length;      // a returned value is wrapped in a Promise\n}\n\nconst count = await loadCount();\nTwo rules:\n\nA function that uses await must be declared async.\nAn async function always returns a Promise, whatever you write in the return type.\n\n\n7.2.1 Forgetting await\nconst count = loadCount();          // Promise&lt;number&gt;, not a number\nconsole.log(count);                 // Promise { &lt;pending&gt; }\nconsole.log(count + 1);             // compile error - and it would be nonsense anyway\nNothing warns you at runtime — the program happily prints a Promise and carries on. The type checker is your only protection here, which is another reason never to switch it off.\n\n\n7.2.2 Top-level await\nBecause we use ES modules, await works directly at the top level of a file. No main() wrapper is needed:\n// src/app.ts\nconst data = await loadData();\nconsole.log(data.length);\n\n\n7.2.3 Sequential vs. parallel\nconst a = await loadA();        // waits\nconst b = await loadB();        // ... and only then starts\n\nconst [a, b] = await Promise.all([loadA(), loadB()]);   // both at once\nUse Promise.all whenever the calls do not depend on each other. Two requests that each take 200 ms then cost you 200 ms, not 400.\n\n\n7.2.4 Error handling\nA rejected promise behaves like a thrown exception:\ntry {\n  const text = await readFile(path, \"utf-8\");\n} catch (error) {\n  // error is of type `unknown` - you cannot just access error.message\n  const message = error instanceof Error ? error.message : String(error);\n  console.error(`Could not read ${path}: ${message}`);\n}\n\n:warning: In a catch block the error is unknown, not Error. Narrow it before use.",
+    "text": "7.2 The Promise\nA Promise&lt;T&gt; is a value that is not there yet. It is pending, then either fulfilled with a value or rejected with an error.\nasync function loadCount(): Promise&lt;number&gt; {\n  const text = await readFile(\"data.json\", \"utf-8\");\n  return JSON.parse(text).length;      // a returned value is wrapped in a Promise\n}\n\nconst count = await loadCount();\nTwo rules:\n\nA function that uses await must be declared async.\nAn async function always returns a Promise, whatever you write in the return type.\n\n\n7.2.1 Forgetting await\nconst count = loadCount();          // Promise&lt;number&gt;, not a number\nconsole.log(count);                 // Promise { &lt;pending&gt; }\nconsole.log(count + 1);             // compile error - and it would be nonsense anyway\nNothing warns you at runtime — the program happily prints a Promise and carries on. The type checker is your only protection here, which is another reason never to switch it off.\n\n\n7.2.2 Top-level await\nBecause we use ES modules, await works directly at the top level of a file. No main() wrapper is needed:\n// src/app.ts\nconst data = await loadData();\nconsole.log(data.length);\n\n\n7.2.3 Sequential vs. parallel\nconst a = await loadA();        // waits\nconst b = await loadB();        // ... and only then starts\n\nconst [a, b] = await Promise.all([loadA(), loadB()]);   // both at once\nUse Promise.all whenever the calls do not depend on each other. Two requests that each take 200 ms then cost you 200 ms, not 400.\n\n\n7.2.4 Error handling\nA rejected promise behaves like a thrown exception:\ntry {\n  const text = await readFile(path, \"utf-8\");\n} catch (error) {\n  // error is of type `unknown` - you cannot just access error.message\n  const message = error instanceof Error ? error.message : String(error);\n  console.error(`Could not read ${path}: ${message}`);\n}\n\n⚠️ In a catch block the error is unknown, not Error. Narrow it before use.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
@@ -541,7 +541,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html#reading-files",
     "title": "7  Asynchronous Programming and Files",
     "section": "7.3 Reading files",
-    "text": "7.3 Reading files\nimport { readFile } from \"fs/promises\";\n\nconst text = await readFile(\"data/lineup.json\", \"utf-8\");\nAlways pass the encoding. Without it you get a Buffer instead of a string.\n\n7.3.1 Paths\nA relative path is resolved against the working directory — wherever npm start was called from, which is not necessarily where your source file lives. Build paths explicitly:\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\nconst dataPath = join(dirName, \"..\", \"data\", \"lineup.json\");\n\n:bulb: __dirname does not exist in ES modules. The three lines above are its replacement, and you will write them in every exercise from here on.\n\n\n\n7.3.2 JSON\nconst text = await readFile(dataPath, \"utf-8\");\nconst acts = JSON.parse(text) as Act[];      // a LIE the compiler believes\nJSON.parse returns any. The as Act[] tells the compiler to stop asking questions — it verifies nothing. If the file is malformed, or a field is missing, the program crashes somewhere far away from the actual cause.\nFor file data we write ourselves, as is acceptable. For anything coming from a user or a network, validate it with a type guard, as in EX2.\n\n\n7.3.3 Writing files\nimport { writeFile } from \"fs/promises\";\n\nconst json = JSON.stringify(acts, null, 2);   // 2 = indentation, makes diffs readable\nawait writeFile(dataPath, json, \"utf-8\");\nwriteFile overwrites the whole file and creates it if it does not exist.\n\n\n7.3.4 CSV\nThere is no built-in CSV parser. Split the text yourself:\nimport { EOL } from \"os\";\n\nconst lines = text.split(EOL).filter((line) =&gt; line.trim().length &gt; 0);\nconst rows = lines.slice(1);                 // skip the header\nconst tools = rows.map((line) =&gt; parseTool(line));\n\n:warning: Use os.EOL, never a hard-coded \"\\n\" — the files in this repository are edited on Windows and on Linux. If a file may come from either, split with /\\r?\\n/ instead.",
+    "text": "7.3 Reading files\nimport { readFile } from \"fs/promises\";\n\nconst text = await readFile(\"data/lineup.json\", \"utf-8\");\nAlways pass the encoding. Without it you get a Buffer instead of a string.\n\n7.3.1 Paths\nA relative path is resolved against the working directory — wherever npm start was called from, which is not necessarily where your source file lives. Build paths explicitly:\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\nconst dataPath = join(dirName, \"..\", \"data\", \"lineup.json\");\n\n💡 __dirname does not exist in ES modules. The three lines above are its replacement, and you will write them in every exercise from here on.\n\n\n\n7.3.2 JSON\nconst text = await readFile(dataPath, \"utf-8\");\nconst acts = JSON.parse(text) as Act[];      // a LIE the compiler believes\nJSON.parse returns any. The as Act[] tells the compiler to stop asking questions — it verifies nothing. If the file is malformed, or a field is missing, the program crashes somewhere far away from the actual cause.\nFor file data we write ourselves, as is acceptable. For anything coming from a user or a network, validate it with a type guard, as in EX2.\n\n\n7.3.3 Writing files\nimport { writeFile } from \"fs/promises\";\n\nconst json = JSON.stringify(acts, null, 2);   // 2 = indentation, makes diffs readable\nawait writeFile(dataPath, json, \"utf-8\");\nwriteFile overwrites the whole file and creates it if it does not exist.\n\n\n7.3.4 CSV\nThere is no built-in CSV parser. Split the text yourself:\nimport { EOL } from \"os\";\n\nconst lines = text.split(EOL).filter((line) =&gt; line.trim().length &gt; 0);\nconst rows = lines.slice(1);                 // skip the header\nconst tools = rows.map((line) =&gt; parseTool(line));\n\n⚠️ Use os.EOL, never a hard-coded \"\\n\" — the files in this repository are edited on Windows and on Linux. If a file may come from either, split with /\\r?\\n/ instead.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Asynchronous Programming and Files</span>"
@@ -607,7 +607,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html#a-first-express-server",
     "title": "8  HTTP, REST and Express",
     "section": "8.3 A first Express server",
-    "text": "8.3 A first Express server\nnpm install express http-status-codes\nnpm install --save-dev @types/express nodemon\nsrc/app.ts:\nimport express, { Request, Response } from \"express\";\nimport { StatusCodes } from \"http-status-codes\";\n\nconst app = express();\n\napp.use(express.json());        // parses a JSON request body into req.body\n\napp.get(\"/\", (req: Request, res: Response) =&gt; {\n  res.send(\"hello world\");\n});\n\napp.listen(3000, () =&gt; console.log(\"Server listening on http://localhost:3000\"));\nnpm run dev        # nodemon restarts on every save\n\n:bulb: express.json() is easy to forget. Without it req.body is undefined on every POST, and you will look for the bug in the wrong place.",
+    "text": "8.3 A first Express server\nnpm install express http-status-codes\nnpm install --save-dev @types/express nodemon\nsrc/app.ts:\nimport express, { Request, Response } from \"express\";\nimport { StatusCodes } from \"http-status-codes\";\n\nconst app = express();\n\napp.use(express.json());        // parses a JSON request body into req.body\n\napp.get(\"/\", (req: Request, res: Response) =&gt; {\n  res.send(\"hello world\");\n});\n\napp.listen(3000, () =&gt; console.log(\"Server listening on http://localhost:3000\"));\nnpm run dev        # nodemon restarts on every save\n\n💡 express.json() is easy to forget. Without it req.body is undefined on every POST, and you will look for the bug in the wrong place.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>HTTP, REST and Express</span>"
@@ -739,7 +739,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html#map-and-set",
     "title": "9  Objects, Types and Classes",
     "section": "9.6 Map and Set",
-    "text": "9.6 Map and Set\nconst byId = new Map&lt;string, Tool&gt;();\nbyId.set(tool.id, tool);\nconst found = byId.get(\"t1\"); // Tool | undefined\nbyId.has(\"t1\");\nbyId.delete(\"t1\");\nbyId.size; // a property, not a method\n\nfor (const [id, tool] of byId) {\n  // ...\n}\nconst all = [...byId.values()];\nA Map holds key/value pairs, a Set holds each value at most once. Build a Map from an array in one step:\nconst byId = new Map(tools.map((tool) =&gt; [tool.id, tool]));\n\n:warning: A plain object ({}) also maps keys to values, but its keys are always strings, it inherits properties from Object.prototype, and it has no size. Use Map whenever the keys are data.",
+    "text": "9.6 Map and Set\nconst byId = new Map&lt;string, Tool&gt;();\nbyId.set(tool.id, tool);\nconst found = byId.get(\"t1\"); // Tool | undefined\nbyId.has(\"t1\");\nbyId.delete(\"t1\");\nbyId.size; // a property, not a method\n\nfor (const [id, tool] of byId) {\n  // ...\n}\nconst all = [...byId.values()];\nA Map holds key/value pairs, a Set holds each value at most once. Build a Map from an array in one step:\nconst byId = new Map(tools.map((tool) =&gt; [tool.id, tool]));\n\n⚠️ A plain object ({}) also maps keys to values, but its keys are always strings, it inherits properties from Object.prototype, and it has no size. Use Map whenever the keys are data.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
@@ -754,83 +754,6 @@
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html",
-    "title": "10  SQLite",
-    "section": "",
-    "text": "10.1 Why SQLite\nUntil now our data lived in files that we read completely into memory and wrote back completely on every change. That works for twelve tools. It does not work for a real application: two requests writing at the same time lose data, every query is a full scan, and there is nothing to enforce that a loan points at a tool that actually exists.\nA database solves all three. We use SQLite.\nSQLite is not a server. It is a file plus a library that reads and writes it. There is nothing to install, nothing to configure, no port, no password.\nIt is the most widely deployed database in the world — every phone in the room contains several. For this unit it is perfect: the whole database is a file you can delete and recreate.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
-    "title": "10  SQLite",
-    "section": "",
-    "text": "SQLite\nMySQL / PostgreSQL\n\n\n\n\nRuns as\na library inside your process\na separate server process\n\n\nThe database is\none file (workshop.db)\na directory managed by the server\n\n\nSetup\nnone\ninstall, configure, create users\n\n\nConcurrent writers\none at a time\nmany\n\n\nGood for\nembedded apps, tests, small services\nmulti-user production systems\n\n\n\n\n\n:bulb: Install the SQLite Viewer extension for VS Code so you can look inside the .db file while you work.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#the-driver",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#the-driver",
-    "title": "10  SQLite",
-    "section": "10.2 The driver",
-    "text": "10.2 The driver\nNode.js ships SQLite built in since version 22, as node:sqlite. No npm install, no native compilation:\nimport { DatabaseSync } from \"node:sqlite\";\n\nconst db = new DatabaseSync(\"data/workshop.db\");\n\n:warning: node:sqlite is synchronous — DatabaseSync says so in its name. This contradicts what the chapter on asynchronous programming said about never blocking the thread, and for a network database it would be unacceptable. For a local file it is a deliberate trade-off: the operations are measured in microseconds, and the API is far simpler.\nWe still declare our service functions async. Then the routers do not change, and the service can be swapped for an asynchronous driver later without touching anything else.\n\nOther commonly used drivers are better-sqlite3 (synchronous, faster, needs a native build) and sqlite3 + sqlite (asynchronous). Both work; both have to be compiled during npm install, which is exactly the problem node:sqlite removes.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#sql-we-need",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#sql-we-need",
-    "title": "10  SQLite",
-    "section": "10.3 SQL we need",
-    "text": "10.3 SQL we need\n\n10.3.1 Creating a schema\nCREATE TABLE IF NOT EXISTS tools (\n  id        TEXT PRIMARY KEY,\n  name      TEXT NOT NULL,\n  category  TEXT NOT NULL CHECK (category IN ('power', 'hand', 'measuring', 'garden')),\n  condition TEXT NOT NULL CHECK (condition IN ('good', 'worn', 'broken'))\n);\n\nCREATE TABLE IF NOT EXISTS loans (\n  id       TEXT PRIMARY KEY,\n  tool_id  TEXT NOT NULL REFERENCES tools (id),\n  borrower TEXT NOT NULL,\n  from_day TEXT NOT NULL,\n  until    TEXT NOT NULL,\n  state    TEXT NOT NULL CHECK (state IN ('open', 'returned'))\n);\nThree things the database now guarantees for you, which no amount of TypeScript could:\n\nPRIMARY KEY — no two tools with the same id.\nCHECK (… IN …) — the same constraint your union types express, but enforced at runtime.\nREFERENCES tools (id) — a loan cannot point at a tool that does not exist.\n\n\n:warning: SQLite only enforces foreign keys if you ask it to, per connection: db.exec(\"PRAGMA foreign_keys = ON\"). Forgetting this is the classic SQLite mistake.\n\nSQLite has very few types: TEXT, INTEGER, REAL, BLOB, NULL. There is no date type and no boolean. Store dates as TEXT in the format YYYY-MM-DD — it sorts correctly as a string — and booleans as INTEGER 0/1.\nfrom and to are SQL keywords, which is why the column above is called from_day.\n\n\n10.3.2 Queries\nSELECT * FROM tools ORDER BY id;\nSELECT * FROM tools WHERE category = ?;\nSELECT * FROM tools WHERE id = ?;\n\nINSERT INTO loans (id, tool_id, borrower, from_day, until, state) VALUES (?, ?, ?, ?, ?, ?);\nUPDATE loans SET state = 'returned' WHERE id = ?;\nDELETE FROM loans WHERE id = ?;\nFiltering in WHERE instead of with filter in TypeScript is the point of using a database: the work happens where the data is, and an index can help.\n-- the tools that are not lent out right now\nSELECT t.* FROM tools t\nWHERE t.condition &lt;&gt; 'broken'\n  AND NOT EXISTS (SELECT 1 FROM loans l WHERE l.tool_id = t.id AND l.state = 'open');",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
-    "title": "10  SQLite",
-    "section": "10.4 Using the driver",
-    "text": "10.4 Using the driver\n\n10.4.1 Statements without a result\ndb.exec(\"PRAGMA foreign_keys = ON\");\ndb.exec(schemaSql); // several statements at once\n\n\n10.4.2 Prepared statements\nconst selectAll = db.prepare(\"SELECT * FROM tools ORDER BY id\");\nconst rows = selectAll.all(); // an array of rows\n\nconst selectOne = db.prepare(\"SELECT * FROM tools WHERE id = ?\");\nconst row = selectOne.get(\"t01\"); // one row, or undefined\n\nconst insert = db.prepare(\"INSERT INTO loans (id, tool_id) VALUES (?, ?)\");\nconst result = insert.run(\"l05\", \"t02\"); // { changes, lastInsertRowid }\nconsole.log(result.changes); // 1\nchanges tells you how many rows were affected — that is how you distinguish “updated” from “there was no such row”, and therefore how you decide between 200 and 404:\nconst result = db.prepare(\"UPDATE loans SET state = 'returned' WHERE id = ?\").run(id);\nif (result.changes === 0) {\n  // no loan with that id\n}\n\n\n10.4.3 Never build SQL with string concatenation\n// NEVER do this. This is an SQL injection.\ndb.exec(`SELECT * FROM tools WHERE id = '${userInput}'`);\n\n// Always do this.\ndb.prepare(\"SELECT * FROM tools WHERE id = ?\").get(userInput);\nWith ? placeholders the value is passed separately from the statement and can never be interpreted as SQL. A user who sends t01'; DROP TABLE tools; -- as an id then simply gets “not found”.\n\n\n10.4.4 Rows are not your objects\nconst row = db.prepare(\"SELECT * FROM tools WHERE id = ?\").get(\"t01\");\nrow has the type unknown-ish and, at runtime, is a plain object whose keys are the column names — tool_id, not toolId. It has no methods. This is the same situation as JSON.parse, and it has the same answer: a row type plus a mapping function.\ntype ToolRow = {\n  id: string;\n  name: string;\n  category: string;\n  condition: string;\n};\n\nfunction toTool(row: ToolRow): Tool | undefined {\n  return Tool.fromParts(row.id, row.name, row.category, row.condition);\n}\nNote that category is typed as string here, not as Category. The database CHECK constraint makes it very likely to be valid, but the driver cannot prove it — so we validate on the way in, exactly as we did with the CSV file.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#transactions",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#transactions",
-    "title": "10  SQLite",
-    "section": "10.5 Transactions",
-    "text": "10.5 Transactions\nSeveral statements that must all succeed or all fail:\ndb.exec(\"BEGIN\");\ntry {\n  insertLoan.run(/* ... */);\n  updateTool.run(/* ... */);\n  db.exec(\"COMMIT\");\n} catch (error) {\n  db.exec(\"ROLLBACK\");\n  throw error;\n}\nWe need this only for the seeding script in the exercise, but it is the reason databases exist: either the whole change happens, or none of it.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
-    ]
-  },
-  {
-    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
-    "href": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
-    "title": "10  SQLite",
-    "section": "10.6 Where the connection lives",
-    "text": "10.6 Where the connection lives\nOpen the database once for the whole application, not per request:\n// src/db.ts\nimport { DatabaseSync } from \"node:sqlite\";\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\n\nexport const db = new DatabaseSync(join(dirName, \"..\", \"data\", \"workshop.db\"));\ndb.exec(\"PRAGMA foreign_keys = ON\");\nThe module body runs once, the first time the module is imported. That is the simplest singleton there is.\n\n:bulb: Do not commit the .db file. Add it to .gitignore and commit the schema plus a seeding script instead — then anyone can recreate the database from scratch, which is exactly what you want in a repository.",
-    "crumbs": [
-      "Database",
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
     ]
   }
 ]
