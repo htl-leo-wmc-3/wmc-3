@@ -442,7 +442,7 @@
     "href": "content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html#toolchain",
     "title": "5  Introduction to TypeScript",
     "section": "5.8 Toolchain",
-    "text": "5.8 Toolchain\n\n\n\n\n\n\n\nTool\nPurpose\n\n\n\n\ntsc\nthe TypeScript compiler: .ts → .js\n\n\ntsx\nruns a .ts file directly, without a visible compile step\n\n\ntsconfig.json\ncompiler settings (target, module system, strictness, paths)\n\n\njest + ts-jest\nunit tests written in TypeScript\n\n\n\nIn this unit we run everything with tsx and never call tsc by hand. We set a project up together in class — the steps are in the first exercise.\n\n⚠️ tsx only transpiles, it does not type-check. Your editor and npx tsc --noEmit do that. A program that runs is not necessarily a program that compiles.",
+    "text": "5.8 Toolchain\n\n\n\n\n\n\n\nTool\nPurpose\n\n\n\n\ntsc\nthe TypeScript compiler: .ts → .js\n\n\ntsx\nruns a .ts file directly, without a visible compile step\n\n\ntsconfig.json\ncompiler settings (target, module system, strictness, paths)\n\n\nvitest\nunit tests written in TypeScript\n\n\n\nIn this unit we run everything with tsx and never call tsc by hand. We set a project up together in class — the steps are in the first exercise.\n\n⚠️ tsx only transpiles, it does not type-check. Your editor and npx tsc --noEmit do that. A program that runs is not necessarily a program that compiles.",
     "crumbs": [
       "TypeScript and Express",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Introduction to TypeScript</span>"
