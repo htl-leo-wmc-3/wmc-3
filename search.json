@@ -788,5 +788,368 @@
       "TypeScript and Express",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Objects, Types and Classes</span>"
     ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html",
+    "title": "10  SQLite",
+    "section": "",
+    "text": "10.1 Why SQLite\nUntil now our data lived in files that we read completely into memory and wrote back completely on every change. That works for a dozen records. It does not work for a real application:\nA database solves all three. From DBI you already know relational databases and SQL; this unit is about using one from Node.js. We use SQLite.\nSQLite is not a server. It is a file plus a library that reads and writes it, and the library runs inside your own process. There is nothing to install, nothing to configure, no port and no password.\nSQLite is the most widely deployed database in the world: every phone in the room contains several, and many programs store their settings or save games in a SQLite file. It is also faster and more capable than its reputation; the SQLite team’s own guide considers it fine for websites with up to about 100,000 visits a day. Its one real limit is the single writer: many connections can read at the same time, but only one can write. It fits applications that read a lot and write a little, which describes most of our exercises.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#why-sqlite",
+    "title": "10  SQLite",
+    "section": "",
+    "text": "SQLite\nPostgreSQL, Oracle, SQL Server, …\n\n\n\n\nRuns as\na library inside your process\na separate server process\n\n\nThe database is\none file (library.db)\nfiles managed by the server\n\n\nSetup\nnone\ninstall, configure, create users\n\n\nWriters at the same time\none\nmany\n\n\nGood for\nembedded apps, tests, small and medium web apps\nmulti-user production systems\n\n\n\n\n\n💡 Install the SQLite Viewer extension for VS Code so you can look inside the .db file while you work. DB Browser for SQLite and DataGrip work as well.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#the-driver-nodesqlite",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#the-driver-nodesqlite",
+    "title": "10  SQLite",
+    "section": "10.2 The driver: node:sqlite",
+    "text": "10.2 The driver: node:sqlite\nNode.js ships SQLite built in as the module node:sqlite. There is no npm install and nothing is compiled on your machine:\nimport { DatabaseSync } from \"node:sqlite\";\n\nconst db = new DatabaseSync(\"data/library.db\"); // creates the file if it does not exist\nOlder projects use the packages better-sqlite3 or sqlite3. They work in a similar way, but they are extra dependencies with a native part that has to be built or downloaded during npm install, which is exactly what the built-in module avoids.\n\n10.2.1 Database access is IO, and IO is asynchronous\nA database is IO, just like reading a file or calling another server over the network. The chapter on asynchronous programming explained why IO must not block the single thread of Node.js, and for almost every database that is the rule: the driver sends the query to a database server and returns a Promise, and you await the result.\nnode:sqlite is the exception, and DatabaseSync says so in its name: every call blocks until it is finished. That is acceptable here for one reason only. SQLite runs inside our own process and works on a local file, so there is no network in between and a query takes microseconds, and the API becomes much simpler.\nSo from now on our services are synchronous: they return values, not Promises. Only explicit file access, for example reading a CSV file for an import, stays async. Keep in mind that this is a special case. With any database server you will be back to async and await.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#creating-a-schema",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#creating-a-schema",
+    "title": "10  SQLite",
+    "section": "10.3 Creating a schema",
+    "text": "10.3 Creating a schema\nThe tables are created with plain SQL. We keep the statements in a file data/schema.sql and execute it with db.exec(...), which runs several statements at once:\nCREATE TABLE books (\n  isbn   TEXT    NOT NULL,\n  title  TEXT    NOT NULL,\n  author TEXT    NOT NULL,\n  year   INTEGER NOT NULL,\n  CONSTRAINT pk_books PRIMARY KEY (isbn)\n) STRICT;\n\nCREATE TABLE loans (\n  id      INTEGER NOT NULL,\n  isbn    TEXT    NOT NULL,\n  student TEXT    NOT NULL,\n  CONSTRAINT pk_loans PRIMARY KEY (id),\n  CONSTRAINT fk_loans_book FOREIGN KEY (isbn) REFERENCES books (isbn)\n) STRICT;\n\nName your constraints (pk_books, fk_loans_book). When one is violated, the name tells you which rule was broken.\nOrder matters: loans refers to books, so books has to exist first, and when you drop the tables it is the other way round.\nAn INTEGER primary key gets its value from the database when you insert a row without it. That is how loans.id is filled.\n\n\n10.3.1 Types and STRICT\nSQLite has only a handful of types:\n\n\n\n\n\n\n\nType\nUsed for\n\n\n\n\nINTEGER\nwhole numbers, and booleans as 0 / 1\n\n\nREAL\nfloating point numbers\n\n\nTEXT\nstrings, and dates as ISO strings (2026-11-24, 2026-11-24T10:15:00)\n\n\nBLOB\nbinary data, rarely needed\n\n\n\nThere is no date type and no boolean type. ISO dates are a good choice anyway: they sort correctly as strings, and SQLite’s date functions understand them.\nWithout STRICT, SQLite stores whatever you give it: 'abc' ends up in an INTEGER column without an error. STRICT at the end of CREATE TABLE switches that off, and the database then refuses values of the wrong type. We always use it.\n\n\n10.3.2 Foreign keys: it depends on who opens the file\nThree things the database now guarantees, which no amount of TypeScript could:\n\nPRIMARY KEY: no two books with the same ISBN.\nCHECK (...): a rule for the values of a column, for example CONSTRAINT ck_books_year CHECK (year &gt; 0). It is the runtime counterpart of a union type.\nFOREIGN KEY ... REFERENCES: a loan cannot point at a book that does not exist.\n\n\n⚠️ SQLite itself does not enforce foreign keys by default, for historic reasons. Whether they are enforced depends on the program that opens the database: node:sqlite switches them on for every connection it opens, but the sqlite3 command line tool, many database viewers and other drivers do not. There, every connection has to switch them on itself:\ndb.exec(\"PRAGMA foreign_keys = ON\");\nWe do not need this line, because node:sqlite already does it. If you ever use a different driver or tool and suddenly can insert a loan for a book that does not exist, this is why.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#using-the-driver",
+    "title": "10  SQLite",
+    "section": "10.4 Using the driver",
+    "text": "10.4 Using the driver\n\n10.4.1 Statements without parameters\ndb.exec(schemaSql); // DDL, several statements at once, no result\n\n\n10.4.2 Prepared statements\nEverything else goes through a prepared statement: the SQL with ? placeholders, and the values passed separately when it runs.\nconst rows = db.prepare(\"SELECT * FROM books ORDER BY year\").all(); // array of rows\n\nconst row = db.prepare(\"SELECT * FROM books WHERE isbn = ?\").get(\"978-0132350884\");\n// one row, or undefined\n\nconst result = db\n  .prepare(\"INSERT INTO loans (isbn, student) VALUES (?, ?)\")\n  .run(\"978-0132350884\", \"Ada\");\nconsole.log(result.changes); // 1 - number of rows affected\nconsole.log(result.lastInsertRowid); // the id the database chose\n\n\n\n\n\n\n\n\nMethod\nReturns\nUse it for\n\n\n\n\nall(...)\nan array of rows (maybe empty)\nqueries with many results\n\n\nget(...)\none row or undefined\nqueries for one row\n\n\nrun(...)\n{ changes, lastInsertRowid }\nINSERT, UPDATE, DELETE\n\n\n\nchanges tells you how many rows a statement affected. That is how you tell “updated” from “there was no such row”, and therefore how a router decides between 200 and 404:\nconst result = db.prepare(\"UPDATE books SET title = ? WHERE isbn = ?\").run(title, isbn);\nif (result.changes === 0) {\n  // no book with that isbn - this is not an error for the database\n}\nValues you pass must be strings, numbers, null or binary data. A boolean, a Date or undefined cannot be passed: convert them first (active ? 1 : 0, date.toISOString(), null).\n\n\n10.4.3 Never build SQL with string concatenation\n// NEVER do this. This is an SQL injection.\ndb.prepare(`SELECT * FROM books WHERE isbn = '${userInput}'`).all();\n\n// Always do this.\ndb.prepare(\"SELECT * FROM books WHERE isbn = ?\").all(userInput);\nWith a ? placeholder the value travels separately from the statement and can never be read as SQL. A user who sends 000' OR '1'='1 as an ISBN then simply gets no result. The next chapter shows what goes wrong otherwise.\n\n\n10.4.4 Rows are not your objects\nconst row = db.prepare(\"SELECT * FROM loans WHERE id = ?\").get(1);\nThe driver knows nothing about your types. row is a plain object whose keys are the column names (student, not studentName), it has no methods, and nothing has been checked. This is the same situation as with JSON.parse, and it has the same answer: a row type that describes the columns, and a function that turns a row into your model:\ntype BookRow = {\n  isbn: string;\n  title: string;\n  author: string;\n  year: number;\n};\n\nfunction toBook(row: BookRow): Book {\n  return new Book(row.isbn, row.title, row.author, row.year);\n}\n\nconst row = db.prepare(\"SELECT * FROM books WHERE isbn = ?\").get(isbn) as BookRow | undefined;\nconst book = row === undefined ? undefined : toBook(row);\nThe as BookRow is a promise you make to the compiler, not a check. If a column can hold values that your model does not accept, validate them in the mapping function, exactly as you did with CSV lines.\n\n💡 When you console.log a row, Node.js prints [Object: null prototype] { ... }. The driver creates rows without the usual object prototype. You can use them like any other object, and res.json(row) works. Only in tests compare them with toEqual, not toStrictEqual.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#transactions-the-short-version",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#transactions-the-short-version",
+    "title": "10  SQLite",
+    "section": "10.5 Transactions, the short version",
+    "text": "10.5 Transactions, the short version\nSeveral statements that must all succeed or all fail belong in a transaction:\ndb.exec(\"BEGIN\");\ntry {\n  books.forEach((book) =&gt; insertBook.run(book.isbn, book.title, book.author, book.year));\n  db.exec(\"COMMIT\");\n} catch (error) {\n  db.exec(\"ROLLBACK\");\n  throw error;\n}\nIf the fifth insert fails, the first four are undone as well. In this chapter we need that only to fill the database. A later chapter is all about when else you need a transaction, and why it is the core reason databases exist.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#where-the-connection-lives",
+    "title": "10  SQLite",
+    "section": "10.6 Where the connection lives",
+    "text": "10.6 Where the connection lives\nOpening the database for every query would be wasteful. The application opens it once, the first time it is needed, and keeps it open:\n// src/db.ts\nimport { DatabaseSync } from \"node:sqlite\";\nimport { dirname, join } from \"path\";\nimport { fileURLToPath } from \"url\";\n\nconst dirName = dirname(fileURLToPath(import.meta.url));\nexport const dataDir = join(dirName, \"..\", \"data\");\nexport const dbPath = join(dataDir, \"library.db\");\n\nlet connection: DatabaseSync | undefined;\n\n/** Opens the database, closing a previous one. Tests pass \":memory:\". */\nexport function openDatabase(path: string = dbPath): DatabaseSync {\n  if (connection !== undefined) {\n    connection.close();\n  }\n  connection = new DatabaseSync(path);\n  return connection;\n}\n\n/** The one connection of the application, opened on first use. */\nexport function getDb(): DatabaseSync {\n  return connection ?? openDatabase();\n}\nEvery function that needs the database calls getDb() and prepares its statement right there. Because the connection can be replaced, a test can open a fresh in-memory database (openDatabase(\":memory:\")) and the code under test does not notice.\nOne connection for the whole application is right for SQLite: the driver is synchronous, so only one statement runs at a time anyway, and SQLite allows only one writer. Database servers work differently. There, an application keeps a pool of connections and gives each request its own.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/01_sqlite/README.html#the-database-file-is-not-committed",
+    "href": "content/Units/03-Database/material/01_sqlite/README.html#the-database-file-is-not-committed",
+    "title": "10  SQLite",
+    "section": "10.7 The database file is not committed",
+    "text": "10.7 The database file is not committed\nDo not commit the .db file. Put *.db into .gitignore and commit two things instead: the schema (data/schema.sql) and a seed script (npm run seed) that creates the database from scratch and fills it with sample data. Then anyone can recreate the database at any time, and you can always go back to a clean state.\n\n⚠️ On Windows, a running server keeps the .db file open. Stop the server before you delete the file or run the seed script again.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>SQLite</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html",
+    "href": "content/Units/03-Database/material/02_queries/README.html",
+    "title": "11  Queries",
+    "section": "",
+    "text": "11.1 SQL injection\nYou know SELECT, joins and GROUP BY from DBI. This chapter is about running such queries from TypeScript safely, and about turning what comes back into something an API can return. All examples use the database of a small parking garage:\nImagine a login that checks the user name and password like this:\nA user who types x' OR '1'='1 as the password turns the statement into\nAND binds stronger than OR, so the condition is true for every row, and the attacker is logged in without knowing any password. With other input they can read other tables, change data or delete it (the classic comic). This is SQL injection, and it is still one of the most common security holes in web applications.\nThe cause is always the same: a value from the outside became part of the SQL text. The fix is always the same as well: a prepared statement with placeholders.\nThe statement is compiled first, and the values are passed separately. Whatever the user types is compared as a string and can never change the structure of the statement.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#sql-injection",
+    "href": "content/Units/03-Database/material/02_queries/README.html#sql-injection",
+    "title": "11  Queries",
+    "section": "",
+    "text": "// NEVER do this\nconst sql = `SELECT COUNT(*) AS found FROM users\n              WHERE name = '${name}' AND password = '${password}'`;\nconst row = getDb().prepare(sql).get() as { found: number };\n\nSELECT COUNT(*) AS found FROM users WHERE name = 'admin' AND password = 'x' OR '1'='1'\n\n\nconst row = getDb()\n  .prepare(\"SELECT COUNT(*) AS found FROM users WHERE name = ? AND password = ?\")\n  .get(name, password) as { found: number };\n\n\n⚠️ Do not try to “clean” input yourself by removing quotes or similar. You will miss a case, and the library already does it correctly. Every value that comes from a request, a file or another system goes in as a parameter. No exceptions, also not for numbers.\n\n\n💡 Storing passwords as plain text, as in the example, is a second serious mistake. Passwords are stored as salted hashes, a topic for later.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#parameters-and-name",
+    "href": "content/Units/03-Database/material/02_queries/README.html#parameters-and-name",
+    "title": "11  Queries",
+    "section": "11.2 Parameters: ? and :name",
+    "text": "11.2 Parameters: ? and :name\nPlaceholders come in two forms:\n// positional: the values in the same order as the question marks\ngetDb().prepare(\"SELECT * FROM spots WHERE floor = ? AND kind = ?\").all(1, \"electric\");\n\n// named: one object, the keys are the names\ngetDb()\n  .prepare(\"SELECT * FROM spots WHERE floor = :floor AND kind = :kind\")\n  .all({ floor: 1, kind: \"electric\" });\nNamed parameters are easier to read once a statement has more than two or three of them, and the same name can appear twice in the statement.\n\n⚠️ The names in the statement and the keys of the object must match. A key that the statement does not contain makes node:sqlite throw (“Unknown named parameter”). The other way round it stays silent: if the object has no key for :kind, the driver uses NULL for it, and the query quietly returns nothing.\n\nOnly values can be parameters. Table names, column names, ASC/DESC and other keywords cannot. When they depend on the request, they come from a fixed list, see “Sorting” below.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#what-comes-back",
+    "href": "content/Units/03-Database/material/02_queries/README.html#what-comes-back",
+    "title": "11  Queries",
+    "section": "11.3 What comes back",
+    "text": "11.3 What comes back\nget(...) returns one row or undefined, all(...) an array of rows. The values arrive as JavaScript types:\n\n\n\nSQLite\nTypeScript\n\n\n\n\nINTEGER, REAL\nnumber\n\n\nTEXT\nstring\n\n\nNULL\nnull\n\n\n\nA row’s keys are the names of the result columns. Give computed columns a name with AS, and choose names in camelCase, so the row already has the shape your API returns:\ntype FloorOccupancy = {\n  floor: number;\n  totalSpots: number;\n  occupied: number;\n};\n\nconst rows = getDb()\n  .prepare(\n    `SELECT s.floor AS floor, COUNT(*) AS totalSpots, COUNT(p.id) AS occupied\n       FROM spots s\n       LEFT JOIN parkings p ON p.spot_id = s.id AND p.departed IS NULL\n      GROUP BY s.floor\n      ORDER BY s.floor`\n  )\n  .all() as FloorOccupancy[];\nWhen a row has the table’s column names (license_plate), map it to your own type with a small function, as in the previous chapter.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#filtering",
+    "href": "content/Units/03-Database/material/02_queries/README.html#filtering",
+    "title": "11  Queries",
+    "section": "11.4 Filtering",
+    "text": "11.4 Filtering\n\n11.4.1 A WHERE built from fragments\nOptional filters from the query string mean a WHERE clause whose parts depend on the request. Build it from fixed text fragments, and collect the values separately:\nexport function findFreeSpots(floor?: number, kind?: SpotKind): Spot[] {\n  const conditions = [\n    \"NOT EXISTS (SELECT 1 FROM parkings p WHERE p.spot_id = s.id AND p.departed IS NULL)\",\n  ];\n  const values: (string | number)[] = [];\n\n  if (floor !== undefined) {\n    conditions.push(\"s.floor = ?\");\n    values.push(floor);\n  }\n  if (kind !== undefined) {\n    conditions.push(\"s.kind = ?\");\n    values.push(kind);\n  }\n\n  const sql = `SELECT * FROM spots s\n                WHERE ${conditions.join(\" AND \")}\n                ORDER BY s.floor, s.number`;\n  return getDb().prepare(sql).all(...values) as Spot[];\n}\nThe SQL text only ever contains what you wrote yourself. Everything from the request is in values.\n\n\n11.4.2 LIKE\nLIKE compares with a pattern: % stands for any number of characters, _ for exactly one. The wildcards belong in the value, not in the SQL:\ngetDb()\n  .prepare(\"SELECT * FROM cars WHERE owner LIKE ? ORDER BY owner\")\n  .all(`%${owner}%`); // contains `owner`\nSQLite’s LIKE ignores the difference between upper and lower case, but only for the 26 ASCII letters: a matches A, ä does not match Ä. If that matters, compare LOWER(owner) with a lowercased value. (A user who types % themselves gets “everything”, which is harmless here.)",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#sorting-and-limiting",
+    "href": "content/Units/03-Database/material/02_queries/README.html#sorting-and-limiting",
+    "title": "11  Queries",
+    "section": "11.5 Sorting and limiting",
+    "text": "11.5 Sorting and limiting\nORDER BY ? does not work: the placeholder would be a value, and sorting by a constant value does nothing. The column has to be part of the SQL text, so it must never come from the request directly. Map the allowed values to columns instead:\n// model.ts\nexport type CarSort = \"plate\" | \"owner\" | \"model\";\n\nexport function isCarSort(value: string): value is CarSort {\n  return value === \"plate\" || value === \"owner\" || value === \"model\";\n}\n\n// car-service.ts\nconst SORT_COLUMNS = {\n  plate: \"license_plate\",\n  owner: \"owner\",\n  model: \"model\",\n};\n\nexport function findCars(owner: string, sort: CarSort): CarDto[] {\n  const column = SORT_COLUMNS[sort];\n  const rows = getDb()\n    .prepare(`SELECT * FROM cars WHERE owner LIKE ? ORDER BY ${column}, license_plate`)\n    .all(`%${owner}%`) as CarRow[];\n  return rows.map(toDto);\n}\nThe router checks the request’s sort with isCarSort and answers 400 for anything else, so the service only ever receives one of the three keys. The SQL text still only contains strings you wrote. LIMIT ? on the other hand is a value and works as a parameter, but check the number in the router first: a positive integer, with an upper bound.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#joins",
+    "href": "content/Units/03-Database/material/02_queries/README.html#joins",
+    "title": "11  Queries",
+    "section": "11.6 Joins",
+    "text": "11.6 Joins\nAn inner join returns only rows that have a partner on both sides:\nSELECT p.arrived, p.departed, p.fee, s.floor, s.number\n  FROM parkings p\n  JOIN spots s ON s.id = p.spot_id\n WHERE p.license_plate = ?\n ORDER BY p.arrived DESC\nA left (outer) join keeps every row of the left table, and fills the columns of the right table with NULL where there is no partner. That is what you need for “all floors, and how many cars are on each”, including floors that are empty:\nSELECT s.floor, COUNT(*) AS totalSpots, COUNT(p.id) AS occupied\n  FROM spots s\n  LEFT JOIN parkings p ON p.spot_id = s.id AND p.departed IS NULL\n GROUP BY s.floor\n\n⚠️ ON or WHERE? The condition p.departed IS NULL is part of the join here: “join only the parkings that are still running”. Moved into a WHERE, it is applied after the join. A spot whose cars have all left joins only rows with a departed date, the WHERE removes them all, and the spot disappears from the result. totalSpots is then wrong. Rule of thumb: conditions on the right table of a LEFT JOIN go into ON.\n\nA table can also be joined with itself, for example employees with their manager, who is another employee. Give the table two aliases, and use a LEFT JOIN so the boss, who has no manager, is not lost.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#grouping-and-aggregates",
+    "href": "content/Units/03-Database/material/02_queries/README.html#grouping-and-aggregates",
+    "title": "11  Queries",
+    "section": "11.7 Grouping and aggregates",
+    "text": "11.7 Grouping and aggregates\n\n\n\n\n\n\n\nFunction\nResult\n\n\n\n\nCOUNT(*)\nnumber of rows in the group\n\n\nCOUNT(column)\nnumber of rows where column is not NULL\n\n\nCOUNT(DISTINCT column)\nnumber of different values\n\n\nSUM, AVG, MIN, MAX\nas the name says; NULL if there were no values\n\n\nROUND(x, 2)\nrounded to 2 decimal places\n\n\nCOALESCE(x, 0)\nx, or 0 if x is NULL\n\n\n\nIn the occupancy query above, COUNT(*) counts all spots of a floor, while COUNT(p.id) counts only those that found a current parking. The outer join produced NULL for the others.\nWHERE filters rows before they are grouped, HAVING filters groups afterwards:\nSELECT c.owner, COUNT(*) AS parkings\n  FROM cars c\n  JOIN parkings p ON p.license_plate = c.license_plate\n WHERE p.departed IS NOT NULL      -- only finished parkings\n GROUP BY c.owner\nHAVING COUNT(*) &gt;= ?              -- only regular customers\n ORDER BY parkings DESC\n\n⚠️ Joining two “many” sides at once multiplies rows. If a floor has 8 spots and you join both the spots and all past parkings, every spot appears once per parking, and COUNT(*) no longer counts spots. COUNT(DISTINCT s.id) counts them correctly again, or you compute one of the numbers in a subquery.\n\nAn aggregate without GROUP BY returns exactly one row. SUM over no rows is NULL, not 0, so a revenue query for a day without any parking needs COALESCE(SUM(fee), 0).",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#subqueries",
+    "href": "content/Units/03-Database/material/02_queries/README.html#subqueries",
+    "title": "11  Queries",
+    "section": "11.8 Subqueries",
+    "text": "11.8 Subqueries\nA query inside a query. The most useful forms for us:\n-- cars that have never parked\nSELECT * FROM cars c\n WHERE NOT EXISTS (SELECT 1 FROM parkings p WHERE p.license_plate = c.license_plate);\n\n-- spots on the floor with the most electric spots\nSELECT * FROM spots\n WHERE floor = (SELECT floor FROM spots WHERE kind = 'electric'\n                 GROUP BY floor ORDER BY COUNT(*) DESC LIMIT 1);\nEXISTS / NOT EXISTS asks “is there at least one matching row?” and is often the clearest way to write a condition about another table. A subquery in = must return exactly one value.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#dates",
+    "href": "content/Units/03-Database/material/02_queries/README.html#dates",
+    "title": "11  Queries",
+    "section": "11.9 Dates",
+    "text": "11.9 Dates\nSQLite stores dates as TEXT, and its date functions work on ISO strings:\n\n\n\n\n\n\n\nExpression\nResult\n\n\n\n\ndate('2026-11-24 14:30:00')\n'2026-11-24'\n\n\nstrftime('%Y', arrived)\nthe year as text, '2026'\n\n\ndate('now')\ntoday (in UTC)\n\n\njulianday(departed) - julianday(arrived)\nthe difference in days, as a decimal number\n\n\n\nBecause ISO strings sort correctly, you can compare them directly. Be careful with ranges: departed &lt;= '2026-11-30' misses '2026-11-30 17:00:00', because the longer string is “greater”. Compare the date part instead:\nSELECT date(departed) AS day, COUNT(*) AS parkings, ROUND(SUM(fee), 2) AS revenue\n  FROM parkings\n WHERE date(departed) BETWEEN ? AND ?   -- inclusive on both ends\n GROUP BY date(departed)\n ORDER BY day",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/02_queries/README.html#validating-query-parameters",
+    "href": "content/Units/03-Database/material/02_queries/README.html#validating-query-parameters",
+    "title": "11  Queries",
+    "section": "11.10 Validating query parameters",
+    "text": "11.10 Validating query parameters\nEverything in req.query is a string, an array or missing. Check it in the router, before the service is called, and answer 400 Bad Request if it does not fit:\ncarRouter.get(\"/cars\", (req, res) =&gt; {\n  const owner = singleValue(req.query.owner) ?? \"\";\n  const sort = singleValue(req.query.sort) ?? \"plate\";\n\n  if (!isCarSort(sort)) {\n    res.status(StatusCodes.BAD_REQUEST).json({ error: \"sort must be plate, owner or model\" });\n    return;\n  }\n  res.json(findCars(owner, sort));\n});\n\nNumbers: Number(text), then Number.isInteger(...) and a range check.\nDates: a simple pattern (/^\\d{4}-\\d{2}-\\d{2}$/) and, for ranges, from &lt;= to.\nFixed sets of values (kind): a type guard such as isSpotKind(value).\n\nThe parameters protect you against injection. The validation protects you against nonsense, and gives the client a clear answer instead of an empty list.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Queries</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html",
+    "title": "12  Writing and Transactions",
+    "section": "",
+    "text": "12.1 Inserting\nReading data is half of an API. This chapter is about the other half: creating, changing and deleting rows, answering with the right status code, and making sure that an operation made of several statements happens completely or not at all. The examples use the parking garage from the previous chapter.\nTables with an INTEGER primary key get their id from the database when you leave the column out. run reports it as id (the driver calls it lastInsertRowid), so you can return it to the client.\nA successful POST answers 201 Created with the new resource in the body and its address in the Location header:",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#inserting",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#inserting",
+    "title": "12  Writing and Transactions",
+    "section": "",
+    "text": "const result = unit.run(\n  \"INSERT INTO cars (license_plate, model, owner) VALUES (:plate, :model, :owner)\",\n  { plate: \"L-777XY\", model: \"Skoda Octavia\", owner: \"Eva Berger\" }\n);\n// result.changes === 1, result.id === the id the database chose\n\n\nres.location(`/api/parkings/${parking.id}`).status(StatusCodes.CREATED).json(parking);",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#updating-and-deleting",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#updating-and-deleting",
+    "title": "12  Writing and Transactions",
+    "section": "12.2 Updating and deleting",
+    "text": "12.2 Updating and deleting\nUPDATE and DELETE do not fail when no row matches. They just change nothing, and changes is 0. That is how you find out whether the resource existed:\nconst result = this.unit.run(\"DELETE FROM cars WHERE license_plate = :plate\", { plate });\nreturn result.changes === 1 ? \"deleted\" : \"not-found\";\nA condition in the UPDATE can do part of the checking for you. A car can leave only once:\nUPDATE parkings SET departed = :departed, fee = :fee\n WHERE id = :id AND departed IS NULL\nchanges === 0 now means “unknown id” or “already left”. One SELECT tells the two apart: 404 Not Found or 409 Conflict.\n\n12.2.1 Deleting rows that others refer to\nIf parkings refer to a car, the foreign key decides what happens when the car is deleted:\n\n\n\n\n\n\n\nForeign key\nDeleting the car …\n\n\n\n\nREFERENCES cars (license_plate)\nfails with “FOREIGN KEY constraint failed”\n\n\n... ON DELETE CASCADE\ndeletes its parkings as well\n\n\n... ON DELETE SET NULL\nkeeps the parkings, the column becomes NULL (it must be nullable)\n\n\n\nWhich one is right is a decision about the domain, not about SQL. For the garage, the history of a car that is removed from the system can go, so fk_parkings_car uses ON DELETE CASCADE. A car that is parked right now must not be deleted at all. That is a rule the service checks before deleting, and it answers 409.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#insert-or-update-on-conflict",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#insert-or-update-on-conflict",
+    "title": "12  Writing and Transactions",
+    "section": "12.3 Insert or update: ON CONFLICT",
+    "text": "12.3 Insert or update: ON CONFLICT\nPUT /api/cars/L-777XY means “this car should look like this”, whether it exists or not. SQLite can do both in one statement, an upsert:\nINSERT INTO cars (license_plate, model, owner) VALUES (:plate, :model, :owner)\nON CONFLICT (license_plate) DO UPDATE SET model = excluded.model, owner = excluded.owner\nexcluded is the row that could not be inserted. Whether the car was new (201) or updated (200) is not visible in the result, so the service checks with a SELECT first, inside the same transaction.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#when-a-constraint-says-no",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#when-a-constraint-says-no",
+    "title": "12  Writing and Transactions",
+    "section": "12.4 When a constraint says no",
+    "text": "12.4 When a constraint says no\nA violated constraint makes the statement throw. The error object carries an error code, and the helpers in db-errors.ts turn it into a question you can ask:\nadd(car: CarDto): CarDto | \"exists\" {\n  try {\n    this.unit.run(\n      \"INSERT INTO cars (license_plate, model, owner) VALUES (:plate, :model, :owner)\",\n      { plate: car.licensePlate, model: car.model, owner: car.owner }\n    );\n    return car;\n  } catch (error) {\n    if (isUniqueViolation(error)) {\n      return \"exists\"; // the router answers 409 Conflict\n    }\n    throw error; // anything else is a real error: 500\n  }\n}\nThe alternative is to look first (SELECT 1 FROM cars WHERE license_plate = :plate) and insert only if nothing was found. Both work inside a transaction. The constraint stays the safety net either way: even a forgotten check cannot create a duplicate.\nThe status codes in short:\n\n\n\n\n\n\n\nSituation\nStatus\n\n\n\n\nThe request itself is invalid (missing field, wrong type, negative number)\n400 Bad Request\n\n\nThe resource in the URL does not exist\n404 Not Found\n\n\nThe request is fine, but conflicts with the current state (duplicate, already left, not enough stock)\n409 Conflict",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#validating-the-request-body",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#validating-the-request-body",
+    "title": "12  Writing and Transactions",
+    "section": "12.5 Validating the request body",
+    "text": "12.5 Validating the request body\nreq.body is whatever the client sent. The type you would like it to have is a wish, not a fact, so the router checks every field before it touches the database:\nconst { licensePlate, model, owner } = req.body ?? {};\nif (typeof model !== \"string\" || model.trim().length === 0) {\n  res.status(StatusCodes.BAD_REQUEST).json({ error: \"model is required\" });\n  return;\n}\nNumbers arrive as numbers in JSON, but check them anyway: typeof quantity === \"number\", Number.isInteger(quantity), quantity &gt; 0. Validation keeps nonsense away from the database. The database constraints catch what slips through.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#transactions",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#transactions",
+    "title": "12  Writing and Transactions",
+    "section": "12.6 Transactions",
+    "text": "12.6 Transactions\nFrom DBI you know what a transaction guarantees: atomicity (all or nothing), consistency (constraints hold afterwards), isolation (others do not see half-finished work) and durability (committed is committed).\ndb.exec(\"BEGIN\");\n// ... several statements ...\ndb.exec(\"COMMIT\"); // or ROLLBACK to undo everything since BEGIN\n\n12.6.1 Every statement is atomic on its own\nWithout BEGIN, SQLite runs each statement in its own small transaction (autocommit). An UPDATE that changes ten rows changes all ten or none. So a single INSERT does not need a transaction. You need one as soon as several statements belong together:\n\n\n\n\n\n\n\nSituation\nTransaction?\n\n\n\n\nA request only reads\nno\n\n\nA request runs exactly one writing statement\nnot strictly, but we start one anyway, see below\n\n\nA request writes several rows or tables that belong together\nyes\n\n\nA request checks something and then writes based on the result (check-then-act)\nyes\n\n\n\n\n\n12.6.2 Check-then-act\nWhen a car arrives, the service checks that the spot is free and the car is not parked elsewhere, and then inserts the parking. Two things can go wrong without a transaction:\n\nHalf-finished work. If something fails after the first of several writes, the first one stays in the database. With a transaction, the rollback removes it.\nSomeone else changes the data between the check and the write. Our handlers are synchronous, and Node runs one at a time, so inside our own server two requests cannot interleave there today. That changes as soon as there is an await between check and write, or another process writes to the same database file: a second instance of the server, an import script, a person in a database tool. Then two cars can be checked into the same free spot.\n\nA transaction makes the check and the write one unit. In SQLite only one connection can write at a time, and while our transaction holds the write lock, nobody else can change what we just checked.\n\n\n12.6.3 Isolation in SQLite\nSQLite transactions are serializable, the strictest level: there is only one writer at a time, and nobody sees changes that are not committed. A plain BEGIN is deferred: it takes the write lock only at the first writing statement. If another connection is writing at that moment, a transaction that already read something can fail halfway with “database is locked”. BEGIN IMMEDIATE takes the write lock at the start, so a transaction either cannot start or runs to the end. We always use it for writing.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#the-unit-of-work",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#the-unit-of-work",
+    "title": "12  Writing and Transactions",
+    "section": "12.7 The unit of work",
+    "text": "12.7 The unit of work\nStarting, committing and rolling back by hand in every route is repetitive, and forgetting the rollback in one error path leaves a transaction open. So we wrap it in a small class, Unit: one unit of work, everything one request does with the database.\n\n\n\n\n\n\n\nMember\nDoes\n\n\n\n\nnew Unit()\nuses the connection of the application (tests pass their own)\n\n\nbegin()\nBEGIN IMMEDIATE; throws if a transaction is already running\n\n\ncommit() / rollback()\nends the transaction; throws if none is running\n\n\nall&lt;T&gt;(sql, params) / get&lt;T&gt;(sql, params)\nqueries with named parameters\n\n\nrun(sql, params)\nINSERT/UPDATE/DELETE, returns { changes, id }\n\n\n\n\n12.7.1 using: the rollback you cannot forget\n{\n  using unit = new Unit();\n  unit.begin();\n  // ...\n  unit.commit();\n} // the end of the block: the unit is disposed\nA variable declared with using instead of const is disposed when the block ends, whichever way it ends: normally, by return, or by an exception. Disposing means calling the object’s [Symbol.dispose]() method. Unit implements it: if a transaction is still open, it rolls it back. So the rule becomes very simple: nothing is stored unless the code reaches commit().\n\n\n12.7.2 The router owns the unit\nOne request is one logical unit of work, so the router creates the unit, decides whether the request writes, and commits when everything worked. The services receive the unit in their constructor and only run statements:\nparkingRouter.post(\"/parkings\", (req, res) =&gt; {\n  // ... validate the body, 400 otherwise\n\n  using unit = new Unit();\n  unit.begin(); // this request writes\n  const result = new ParkingService(unit).arrive(licensePlate, spotId);\n\n  if (result === \"car-not-found\" || result === \"spot-not-found\") {\n    res.status(StatusCodes.NOT_FOUND).json({ error: result });\n    return; // no commit -&gt; rollback\n  }\n  if (result === \"spot-occupied\" || result === \"car-already-parked\") {\n    res.status(StatusCodes.CONFLICT).json({ error: result });\n    return; // no commit -&gt; rollback\n  }\n\n  unit.commit();\n  res.location(`/api/parkings/${result.id}`).status(StatusCodes.CREATED).json(result);\n});\nexport class ParkingService {\n  constructor(private readonly unit: Unit) {}\n\n  arrive(\n    licensePlate: string,\n    spotId: number\n  ): ParkingDto | \"car-not-found\" | \"spot-not-found\" | \"spot-occupied\" | \"car-already-parked\" {\n    if (!new CarService(this.unit).exists(licensePlate)) {\n      return \"car-not-found\";\n    }\n    // ... more checks, then the INSERT\n  }\n}\nWhy the router, and not each service?\n\nNo nested transactions. ParkingService uses CarService for a lookup. Both work with the same unit, so there is exactly one transaction. If every service method started its own, the second begin() would fail with “Transaction already started”.\nThe boundary is visible. One look at a route shows whether it writes and where it commits.\nTests decide where the data lives. A test creates a unit on an in-memory database and hands it to the service. The service does not notice.\n\nThe service still never sees Request or Response, and the router contains no SQL.\n\n⚠️ No await between begin() and commit(). All requests share one connection. If a request pauses inside its transaction, the next request’s statements run on the same connection and end up in the same transaction. Read files and call other services before you begin, then do the database work in one synchronous block.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/03_writing-and-transactions/README.html#one-connection-here-a-pool-elsewhere",
+    "href": "content/Units/03-Database/material/03_writing-and-transactions/README.html#one-connection-here-a-pool-elsewhere",
+    "title": "12  Writing and Transactions",
+    "section": "12.8 One connection here, a pool elsewhere",
+    "text": "12.8 One connection here, a pool elsewhere\nOur application keeps one connection open for its whole life. That fits SQLite: the driver is synchronous, there is only one writer anyway, and the transaction rules above keep requests apart. A database server is different. There, a request waits for the network, many requests run at the same time, and each transaction needs a connection of its own. Applications then keep a pool of connections and hand one to each request.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Writing and Transactions</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/04_testing-and-import/README.html",
+    "href": "content/Units/03-Database/material/04_testing-and-import/README.html",
+    "title": "13  Testing and Importing",
+    "section": "",
+    "text": "13.1 Unit tests and integration tests\nThe last two topics of the unit belong together: tests tell you that your services do what they should, and an import is the classic piece of code that you would never trust without them. The examples use the parking garage again.\nYou know vitest from unit 02. With a database, there are two kinds of tests:\nWrite as much as possible as pure functions (input in, result out, no database, no clock): they are the easiest to test. Everything else is tested through the services. We do not test the routers with automated tests; requests.http covers them.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Testing and Importing</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/04_testing-and-import/README.html#unit-tests-and-integration-tests",
+    "href": "content/Units/03-Database/material/04_testing-and-import/README.html#unit-tests-and-integration-tests",
+    "title": "13  Testing and Importing",
+    "section": "",
+    "text": "Unit test\nIntegration test\n\n\n\n\nTests\none function on its own\na service together with the database\n\n\nExample\ncalculateFee(arrived, departed), parseCarLine(line), a validation helper\nParkingService.arrive(...) with real SQL on real tables\n\n\nNeeds\nnothing but the function\na database with the schema and known data\n\n\nFinds\nwrong calculations, wrong rules\nwrong SQL, wrong joins, missing constraints, forgotten transactions",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Testing and Importing</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/04_testing-and-import/README.html#a-database-for-every-test",
+    "href": "content/Units/03-Database/material/04_testing-and-import/README.html#a-database-for-every-test",
+    "title": "13  Testing and Importing",
+    "section": "13.2 A database for every test",
+    "text": "13.2 A database for every test\nAn integration test needs a database in a known state, and every test needs its own state. Otherwise a test that deletes a car breaks the next test that expects it. With SQLite this is cheap: a database can live entirely in memory.\n// test/test-db.ts\nimport { readFileSync } from \"fs\";\nimport { DatabaseSync } from \"node:sqlite\";\nimport { Unit } from \"../src/unit\";\n\n/** Reads a file relative to this test file, wherever the tests are started from. */\nfunction readSql(relativePath: string): string {\n  return readFileSync(new URL(relativePath, import.meta.url), \"utf-8\");\n}\n\nexport function createTestDatabase(): DatabaseSync {\n  const db = new DatabaseSync(\":memory:\");\n  db.exec(readSql(\"../data/schema.sql\")); // the REAL schema\n  db.exec(readSql(\"./fixtures.sql\")); // small, known data\n  return db;\n}\n\nexport function createTestUnit(): Unit {\n  return new Unit(createTestDatabase());\n}\n:memory: creates a new, empty database that disappears when the connection is closed. Every call gives a fresh one, so tests cannot influence each other.\n\n⚠️ Normally, integration tests run against a real database of the same kind as in production. A different database, or an imitation of one, behaves differently in exactly the details you want to test: types, constraints, locking, SQL dialect. That is why real projects start a test database server, often in a container. SQLite is the exception: the in-memory database is SQLite, the same library running inside the same process, with the same schema. So here it is the real thing, only faster.\n\n\n13.2.1 Fixtures\nThe test data (test/fixtures.sql) is small and written by hand: three cars, four spots, a handful of parkings. Then every expected value in a test can be checked in your head (“two of the three cars are parked”). The large sample data of the application is the wrong choice. Nobody knows its numbers by heart, and changing it for the demo would break the tests.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Testing and Importing</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/04_testing-and-import/README.html#writing-a-test",
+    "href": "content/Units/03-Database/material/04_testing-and-import/README.html#writing-a-test",
+    "title": "13  Testing and Importing",
+    "section": "13.3 Writing a test",
+    "text": "13.3 Writing a test\nimport { beforeEach, describe, expect, test } from \"vitest\";\nimport { CarService } from \"../src/car/car-service\";\nimport { Unit } from \"../src/unit\";\nimport { createTestUnit } from \"./test-db\";\n\ndescribe(\"CarService.remove\", () =&gt; {\n  let unit: Unit;\n\n  beforeEach(() =&gt; {\n    unit = createTestUnit();\n  });\n\n  test(\"refuses a car that is parked right now\", () =&gt; {\n    // arrange: the fixtures contain an open parking for L-200BB\n\n    // act\n    const result = new CarService(unit).remove(\"L-200BB\");\n\n    // assert\n    expect(result).toBe(\"still-parked\");\n    expect(new CarService(unit).exists(\"L-200BB\")).toBe(true);\n  });\n});\n\nArrange, act, assert: prepare the state, do one thing, check the outcome.\nOne behaviour per test, and a name that says it. When it fails, the name tells you what is broken.\nCheck the database, not only the return value. After a refused write, look whether really nothing changed.\nTest the refusals as carefully as the success: \"not-found\", \"exists\", \"still-parked\" are part of what the service promises.\nWhen you expect an exception, say which one: toThrow(/CHECK constraint failed/). A bare toThrow() also passes when the code fails for a completely different reason.\n\n\n13.3.1 Time in tests\narrive stores the current time, depart calculates a fee from it. A test cannot know what “now” will be when it runs, so the services take the time as a parameter with a default:\narrive(plate: string, spotId: number, now: string = nowText()): ArriveResult\nThe router calls arrive(plate, spotId) and gets the real time. A test calls arrive(\"L-300CC\", 4, \"2026-12-01 08:00:00\") and knows exactly what will be stored.\n\n\n13.3.2 Testing transactions\nA missing commit() is invisible in requests.http: the response looks fine, and only later you notice that nothing was stored. A test finds it right away. Use one database and two units:\ntest(\"an arrival that is not committed is gone afterwards\", () =&gt; {\n  const db = createTestDatabase();\n\n  {\n    using unit = new Unit(db);\n    unit.begin();\n    new ParkingService(unit).arrive(\"L-300CC\", 4, \"2026-12-01 08:00:00\");\n  } // no commit -&gt; disposed -&gt; rolled back\n\n  using check = new Unit(db);\n  expect(new CarService(check).isParked(\"L-300CC\")).toBe(false);\n});",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Testing and Importing</span>"
+    ]
+  },
+  {
+    "objectID": "content/Units/03-Database/material/04_testing-and-import/README.html#importing-data-from-a-file",
+    "href": "content/Units/03-Database/material/04_testing-and-import/README.html#importing-data-from-a-file",
+    "title": "13  Testing and Importing",
+    "section": "13.4 Importing data from a file",
+    "text": "13.4 Importing data from a file\nApplications often start with data from somewhere else: a CSV export, a list from another system. An import has three steps, and they should stay separate:\n\nRead the file. That is real IO, so it is async, and it happens before the transaction begins.\nParse and validate every line in a pure function. It returns either the data or an error message, so it is easy to unit test.\nStore the valid rows in one unit of work.\n\nconst text = await readFile(join(dataDir, \"cars.csv\"), \"utf-8\"); // 1. read, async\n\nconst lines = text.split(/\\r?\\n/).slice(1); // without the header\nconst cars: CarDto[] = [];\nconst errors: string[] = [];\nlines.forEach((line, index) =&gt; {\n  if (line.trim().length === 0) {\n    return;\n  }\n  const result = parseCarLine(line); // 2. parse: CarDto or an error message\n  if (typeof result === \"string\") {\n    errors.push(`line ${index + 2}: ${result}`);\n  } else {\n    cars.push(result);\n  }\n});\n\nusing unit = new Unit(); // 3. store, synchronous, one transaction\nunit.begin();\nconst report = new CarImportService(unit).importCars(cars);\nunit.commit();\n\\r?\\n handles files with Windows line endings, and empty lines are skipped. Line numbers in the messages count the header, so they match what the user sees in an editor.\n\n13.4.1 All or nothing, or skip and report?\nWhat should happen when line 37 is a duplicate?\n\n\n\n\n\n\n\n\nStrategy\nBehaviour\nFits\n\n\n\n\nAll or nothing\nthe first error stops the import, the transaction is rolled back, nothing is stored\ndata that only makes sense complete (an order with its items, a timetable)\n\n\nSkip and report\ninvalid or duplicate lines are skipped, the rest is stored, and the report lists every skipped line\nlists of independent records (cars, passengers)\n\n\n\nBoth need the transaction. For “all or nothing” that is obvious. For “skip and report” it still makes sure that a crash halfway through, a programming error or a full disk, does not leave half an import behind.\n\n💡 When a single statement inside a transaction violates a constraint, SQLite undoes only that statement. The transaction stays open, and the earlier inserts are still in it. That is what makes “skip and report” with isUniqueViolation possible inside one unit.\n\n\n⚠️ The file is read before begin(). An await inside the transaction would pause it, and other requests would run their statements on the same connection, inside your transaction.",
+    "crumbs": [
+      "Database",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Testing and Importing</span>"
+    ]
   }
 ]

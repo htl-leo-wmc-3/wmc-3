@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; Writing and Transactions – Web and Mobile Computing 3</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../content/Units/03-Database/material/04_testing-and-import/README.html" rel="next">
+<link href="../../../../../content/Units/03-Database/material/02_queries/README.html" rel="prev">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-bfe050db2283133c8854d94eaab4e9ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/quarto-novedu-1.0.0/novedu.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html">Database</a></li><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../../../../">Web and Mobile Computing 3</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../../../../WMC3.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Node.js</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/01_tools/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/01_tools/VSCode-Extensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visual Studio Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/02_node/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to Node.js</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/03_npm/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to <code>npm</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">TypeScript and Express</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to TypeScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Arrays and Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asynchronous Programming and Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">HTTP, REST and Express</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Objects, Types and Classes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Database</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">SQLite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/02_queries/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/04_testing-and-import/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Testing and Importing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#inserting" id="toc-inserting" class="nav-link active" data-scroll-target="#inserting"><span class="header-section-number">12.1</span> Inserting</a></li>
+  <li><a href="#updating-and-deleting" id="toc-updating-and-deleting" class="nav-link" data-scroll-target="#updating-and-deleting"><span class="header-section-number">12.2</span> Updating and deleting</a>
+  <ul class="collapse">
+  <li><a href="#deleting-rows-that-others-refer-to" id="toc-deleting-rows-that-others-refer-to" class="nav-link" data-scroll-target="#deleting-rows-that-others-refer-to"><span class="header-section-number">12.2.1</span> Deleting rows that others refer to</a></li>
+  </ul></li>
+  <li><a href="#insert-or-update-on-conflict" id="toc-insert-or-update-on-conflict" class="nav-link" data-scroll-target="#insert-or-update-on-conflict"><span class="header-section-number">12.3</span> Insert or update: <code>ON CONFLICT</code></a></li>
+  <li><a href="#when-a-constraint-says-no" id="toc-when-a-constraint-says-no" class="nav-link" data-scroll-target="#when-a-constraint-says-no"><span class="header-section-number">12.4</span> When a constraint says no</a></li>
+  <li><a href="#validating-the-request-body" id="toc-validating-the-request-body" class="nav-link" data-scroll-target="#validating-the-request-body"><span class="header-section-number">12.5</span> Validating the request body</a></li>
+  <li><a href="#transactions" id="toc-transactions" class="nav-link" data-scroll-target="#transactions"><span class="header-section-number">12.6</span> Transactions</a>
+  <ul class="collapse">
+  <li><a href="#every-statement-is-atomic-on-its-own" id="toc-every-statement-is-atomic-on-its-own" class="nav-link" data-scroll-target="#every-statement-is-atomic-on-its-own"><span class="header-section-number">12.6.1</span> Every statement is atomic on its own</a></li>
+  <li><a href="#check-then-act" id="toc-check-then-act" class="nav-link" data-scroll-target="#check-then-act"><span class="header-section-number">12.6.2</span> Check-then-act</a></li>
+  <li><a href="#isolation-in-sqlite" id="toc-isolation-in-sqlite" class="nav-link" data-scroll-target="#isolation-in-sqlite"><span class="header-section-number">12.6.3</span> Isolation in SQLite</a></li>
+  </ul></li>
+  <li><a href="#the-unit-of-work" id="toc-the-unit-of-work" class="nav-link" data-scroll-target="#the-unit-of-work"><span class="header-section-number">12.7</span> The unit of work</a>
+  <ul class="collapse">
+  <li><a href="#using-the-rollback-you-cannot-forget" id="toc-using-the-rollback-you-cannot-forget" class="nav-link" data-scroll-target="#using-the-rollback-you-cannot-forget"><span class="header-section-number">12.7.1</span> <code>using</code>: the rollback you cannot forget</a></li>
+  <li><a href="#the-router-owns-the-unit" id="toc-the-router-owns-the-unit" class="nav-link" data-scroll-target="#the-router-owns-the-unit"><span class="header-section-number">12.7.2</span> The router owns the unit</a></li>
+  </ul></li>
+  <li><a href="#one-connection-here-a-pool-elsewhere" id="toc-one-connection-here-a-pool-elsewhere" class="nav-link" data-scroll-target="#one-connection-here-a-pool-elsewhere"><span class="header-section-number">12.8</span> One connection here, a pool elsewhere</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html">Database</a></li><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Stuck or have a question?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ask the AI tutor for this unit. It knows the chapters and exercises of this unit. You can ask in German or English.</p>
+<div class="novedu-cta novedu-cta-tutor">
+<p><a href="https://app.novedu.at/d4gouxxqj1">▶ Ask the WMC tutor on app.novedu.at</a></p>
+</div>
+</div>
+</div>
+<p>Reading data is half of an API. This chapter is about the other half: creating, changing and deleting rows, answering with the right status code, and making sure that an operation made of several statements happens <strong>completely or not at all</strong>. The examples use the parking garage from the previous chapter.</p>
+<section id="inserting" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="inserting"><span class="header-section-number">12.1</span> Inserting</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> unit<span class="op">.</span><span class="fu">run</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"INSERT INTO cars (license_plate, model, owner) VALUES (:plate, :model, :owner)"</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  { plate<span class="op">:</span> <span class="st">"L-777XY"</span><span class="op">,</span> model<span class="op">:</span> <span class="st">"Skoda Octavia"</span><span class="op">,</span> owner<span class="op">:</span> <span class="st">"Eva Berger"</span> }</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">// result.changes === 1, result.id === the id the database chose</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Tables with an <code>INTEGER</code> primary key get their id from the database when you leave the column out. <code>run</code> reports it as <code>id</code> (the driver calls it <code>lastInsertRowid</code>), so you can return it to the client.</p>
+<p>A successful <code>POST</code> answers <strong><code>201 Created</code></strong> with the new resource in the body and its address in the <code>Location</code> header:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>res<span class="op">.</span><span class="fu">location</span>(<span class="vs">`/api/parkings/</span><span class="sc">${</span>parking<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">CREATED</span>)<span class="op">.</span><span class="fu">json</span>(parking)<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="updating-and-deleting" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="updating-and-deleting"><span class="header-section-number">12.2</span> Updating and deleting</h2>
+<p><code>UPDATE</code> and <code>DELETE</code> do not fail when no row matches. They just change nothing, and <code>changes</code> is <code>0</code>. That is how you find out whether the resource existed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> result <span class="op">=</span> <span class="kw">this</span><span class="op">.</span><span class="at">unit</span><span class="op">.</span><span class="fu">run</span>(<span class="st">"DELETE FROM cars WHERE license_plate = :plate"</span><span class="op">,</span> { plate })<span class="op">;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> result<span class="op">.</span><span class="at">changes</span> <span class="op">===</span> <span class="dv">1</span> <span class="op">?</span> <span class="st">"deleted"</span> <span class="op">:</span> <span class="st">"not-found"</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A condition in the <code>UPDATE</code> can do part of the checking for you. A car can leave only once:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">UPDATE</span> parkings <span class="kw">SET</span> departed <span class="op">=</span> <span class="ch">:departed</span>, fee <span class="op">=</span> <span class="ch">:fee</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> <span class="kw">id</span> <span class="op">=</span> <span class="ch">:id</span> <span class="kw">AND</span> departed <span class="kw">IS</span> <span class="kw">NULL</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>changes === 0</code> now means “unknown id” <strong>or</strong> “already left”. One <code>SELECT</code> tells the two apart: <code>404 Not Found</code> or <code>409 Conflict</code>.</p>
+<section id="deleting-rows-that-others-refer-to" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="deleting-rows-that-others-refer-to"><span class="header-section-number">12.2.1</span> Deleting rows that others refer to</h3>
+<p>If parkings refer to a car, the foreign key decides what happens when the car is deleted:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Foreign key</th>
+<th>Deleting the car …</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>REFERENCES cars (license_plate)</code></td>
+<td>fails with “FOREIGN KEY constraint failed”</td>
+</tr>
+<tr class="even">
+<td><code>... ON DELETE CASCADE</code></td>
+<td>deletes its parkings as well</td>
+</tr>
+<tr class="odd">
+<td><code>... ON DELETE SET NULL</code></td>
+<td>keeps the parkings, the column becomes <code>NULL</code> (it must be nullable)</td>
+</tr>
+</tbody>
+</table>
+<p>Which one is right is a decision about the domain, not about SQL. For the garage, the history of a car that is removed from the system can go, so <code>fk_parkings_car</code> uses <code>ON DELETE CASCADE</code>. A car that is parked right now must not be deleted at all. That is a rule the service checks before deleting, and it answers <code>409</code>.</p>
+</section>
+</section>
+<section id="insert-or-update-on-conflict" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="insert-or-update-on-conflict"><span class="header-section-number">12.3</span> Insert or update: <code>ON CONFLICT</code></h2>
+<p><code>PUT /api/cars/L-777XY</code> means “this car should look like this”, whether it exists or not. SQLite can do both in one statement, an <strong>upsert</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> cars (license_plate, model, owner) <span class="kw">VALUES</span> (<span class="ch">:plate</span>, <span class="ch">:model</span>, <span class="ch">:owner</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ON</span> CONFLICT (license_plate) DO <span class="kw">UPDATE</span> <span class="kw">SET</span> model <span class="op">=</span> excluded.model, owner <span class="op">=</span> excluded.owner</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>excluded</code> is the row that could not be inserted. Whether the car was new (<code>201</code>) or updated (<code>200</code>) is not visible in the result, so the service checks with a <code>SELECT</code> first, inside the same transaction.</p>
+</section>
+<section id="when-a-constraint-says-no" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="when-a-constraint-says-no"><span class="header-section-number">12.4</span> When a constraint says no</h2>
+<p>A violated constraint makes the statement throw. The error object carries an error code, and the helpers in <code>db-errors.ts</code> turn it into a question you can ask:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">add</span>(car<span class="op">:</span> CarDto)<span class="op">:</span> CarDto <span class="op">|</span> <span class="st">"exists"</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">try</span> {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">this</span><span class="op">.</span><span class="at">unit</span><span class="op">.</span><span class="fu">run</span>(</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"INSERT INTO cars (license_plate, model, owner) VALUES (:plate, :model, :owner)"</span><span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      { plate<span class="op">:</span> car<span class="op">.</span><span class="at">licensePlate</span><span class="op">,</span> model<span class="op">:</span> car<span class="op">.</span><span class="at">model</span><span class="op">,</span> owner<span class="op">:</span> car<span class="op">.</span><span class="at">owner</span> }</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    )<span class="op">;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> car<span class="op">;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">catch</span> (error) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">isUniqueViolation</span>(error)) {</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">"exists"</span><span class="op">;</span> <span class="co">// the router answers 409 Conflict</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> error<span class="op">;</span> <span class="co">// anything else is a real error: 500</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The alternative is to look first (<code>SELECT 1 FROM cars WHERE license_plate = :plate</code>) and insert only if nothing was found. Both work inside a transaction. The constraint stays the safety net either way: even a forgotten check cannot create a duplicate.</p>
+<p>The status codes in short:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>The request itself is invalid (missing field, wrong type, negative number)</td>
+<td><code>400 Bad Request</code></td>
+</tr>
+<tr class="even">
+<td>The resource in the URL does not exist</td>
+<td><code>404 Not Found</code></td>
+</tr>
+<tr class="odd">
+<td>The request is fine, but conflicts with the current state (duplicate, already left, not enough stock)</td>
+<td><code>409 Conflict</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="validating-the-request-body" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="validating-the-request-body"><span class="header-section-number">12.5</span> Validating the request body</h2>
+<p><code>req.body</code> is whatever the client sent. The type you would like it to have is a wish, not a fact, so the router checks every field before it touches the database:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> { licensePlate<span class="op">,</span> model<span class="op">,</span> owner } <span class="op">=</span> req<span class="op">.</span><span class="at">body</span> <span class="op">??</span> {}<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">typeof</span> model <span class="op">!==</span> <span class="st">"string"</span> <span class="op">||</span> model<span class="op">.</span><span class="fu">trim</span>()<span class="op">.</span><span class="at">length</span> <span class="op">===</span> <span class="dv">0</span>) {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">BAD_REQUEST</span>)<span class="op">.</span><span class="fu">json</span>({ error<span class="op">:</span> <span class="st">"model is required"</span> })<span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Numbers arrive as numbers in JSON, but check them anyway: <code>typeof quantity === "number"</code>, <code>Number.isInteger(quantity)</code>, <code>quantity &gt; 0</code>. Validation keeps nonsense away from the database. The database constraints catch what slips through.</p>
+</section>
+<section id="transactions" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="transactions"><span class="header-section-number">12.6</span> Transactions</h2>
+<p>From DBI you know what a transaction guarantees: <strong>atomicity</strong> (all or nothing), <strong>consistency</strong> (constraints hold afterwards), <strong>isolation</strong> (others do not see half-finished work) and <strong>durability</strong> (committed is committed).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="fu">exec</span>(<span class="st">"BEGIN"</span>)<span class="op">;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">// ... several statements ...</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>db<span class="op">.</span><span class="fu">exec</span>(<span class="st">"COMMIT"</span>)<span class="op">;</span> <span class="co">// or ROLLBACK to undo everything since </span><span class="re">BEGIN</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="every-statement-is-atomic-on-its-own" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="every-statement-is-atomic-on-its-own"><span class="header-section-number">12.6.1</span> Every statement is atomic on its own</h3>
+<p>Without <code>BEGIN</code>, SQLite runs each statement in its own small transaction (<strong>autocommit</strong>). An <code>UPDATE</code> that changes ten rows changes all ten or none. So a single <code>INSERT</code> does not <em>need</em> a transaction. You need one as soon as <strong>several statements belong together</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situation</th>
+<th>Transaction?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A request only reads</td>
+<td>no</td>
+</tr>
+<tr class="even">
+<td>A request runs exactly one writing statement</td>
+<td>not strictly, but we start one anyway, see below</td>
+</tr>
+<tr class="odd">
+<td>A request writes several rows or tables that belong together</td>
+<td><strong>yes</strong></td>
+</tr>
+<tr class="even">
+<td>A request checks something and then writes based on the result (<em>check-then-act</em>)</td>
+<td><strong>yes</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="check-then-act" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="check-then-act"><span class="header-section-number">12.6.2</span> Check-then-act</h3>
+<p>When a car arrives, the service checks that the spot is free and the car is not parked elsewhere, and then inserts the parking. Two things can go wrong without a transaction:</p>
+<ul>
+<li><strong>Half-finished work.</strong> If something fails after the first of several writes, the first one stays in the database. With a transaction, the rollback removes it.</li>
+<li><strong>Someone else changes the data between the check and the write.</strong> Our handlers are synchronous, and Node runs one at a time, so inside our own server two requests cannot interleave there today. That changes as soon as there is an <code>await</code> between check and write, or another process writes to the same database file: a second instance of the server, an import script, a person in a database tool. Then two cars can be checked into the same free spot.</li>
+</ul>
+<p>A transaction makes the check and the write one unit. In SQLite only one connection can write at a time, and while our transaction holds the write lock, nobody else can change what we just checked.</p>
+</section>
+<section id="isolation-in-sqlite" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="isolation-in-sqlite"><span class="header-section-number">12.6.3</span> Isolation in SQLite</h3>
+<p>SQLite transactions are <strong>serializable</strong>, the strictest level: there is only one writer at a time, and nobody sees changes that are not committed. A plain <code>BEGIN</code> is <em>deferred</em>: it takes the write lock only at the first writing statement. If another connection is writing at that moment, a transaction that already read something can fail halfway with “database is locked”. <code>BEGIN IMMEDIATE</code> takes the write lock at the start, so a transaction either cannot start or runs to the end. We always use it for writing.</p>
+</section>
+</section>
+<section id="the-unit-of-work" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="the-unit-of-work"><span class="header-section-number">12.7</span> The unit of work</h2>
+<p>Starting, committing and rolling back by hand in every route is repetitive, and forgetting the rollback in one error path leaves a transaction open. So we wrap it in a small class, <code>Unit</code>: one <strong>unit of work</strong>, everything one request does with the database.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Member</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>new Unit()</code></td>
+<td>uses the connection of the application (tests pass their own)</td>
+</tr>
+<tr class="even">
+<td><code>begin()</code></td>
+<td><code>BEGIN IMMEDIATE</code>; throws if a transaction is already running</td>
+</tr>
+<tr class="odd">
+<td><code>commit()</code> / <code>rollback()</code></td>
+<td>ends the transaction; throws if none is running</td>
+</tr>
+<tr class="even">
+<td><code>all&lt;T&gt;(sql, params)</code> / <code>get&lt;T&gt;(sql, params)</code></td>
+<td>queries with named parameters</td>
+</tr>
+<tr class="odd">
+<td><code>run(sql, params)</code></td>
+<td><code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>, returns <code>{ changes, id }</code></td>
+</tr>
+</tbody>
+</table>
+<section id="using-the-rollback-you-cannot-forget" class="level3" data-number="12.7.1">
+<h3 data-number="12.7.1" class="anchored" data-anchor-id="using-the-rollback-you-cannot-forget"><span class="header-section-number">12.7.1</span> <code>using</code>: the rollback you cannot forget</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  using unit <span class="op">=</span> <span class="kw">new</span> <span class="fu">Unit</span>()<span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  unit<span class="op">.</span><span class="fu">begin</span>()<span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  unit<span class="op">.</span><span class="fu">commit</span>()<span class="op">;</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>} <span class="co">// the end of the block: the unit is disposed</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A variable declared with <code>using</code> instead of <code>const</code> is <strong>disposed</strong> when the block ends, whichever way it ends: normally, by <code>return</code>, or by an exception. Disposing means calling the object’s <code>[Symbol.dispose]()</code> method. <code>Unit</code> implements it: if a transaction is still open, it rolls it back. So the rule becomes very simple: <strong>nothing is stored unless the code reaches <code>commit()</code></strong>.</p>
+</section>
+<section id="the-router-owns-the-unit" class="level3" data-number="12.7.2">
+<h3 data-number="12.7.2" class="anchored" data-anchor-id="the-router-owns-the-unit"><span class="header-section-number">12.7.2</span> The router owns the unit</h3>
+<p>One request is one logical unit of work, so the <strong>router</strong> creates the unit, decides whether the request writes, and commits when everything worked. The services receive the unit in their constructor and only run statements:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>parkingRouter<span class="op">.</span><span class="fu">post</span>(<span class="st">"/parkings"</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ... validate the body, 400 otherwise</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  using unit <span class="op">=</span> <span class="kw">new</span> <span class="fu">Unit</span>()<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  unit<span class="op">.</span><span class="fu">begin</span>()<span class="op">;</span> <span class="co">// this request writes</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> result <span class="op">=</span> <span class="kw">new</span> <span class="fu">ParkingService</span>(unit)<span class="op">.</span><span class="fu">arrive</span>(licensePlate<span class="op">,</span> spotId)<span class="op">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (result <span class="op">===</span> <span class="st">"car-not-found"</span> <span class="op">||</span> result <span class="op">===</span> <span class="st">"spot-not-found"</span>) {</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">NOT_FOUND</span>)<span class="op">.</span><span class="fu">json</span>({ error<span class="op">:</span> result })<span class="op">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span> <span class="co">// no commit -&gt; rollback</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (result <span class="op">===</span> <span class="st">"spot-occupied"</span> <span class="op">||</span> result <span class="op">===</span> <span class="st">"car-already-parked"</span>) {</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">CONFLICT</span>)<span class="op">.</span><span class="fu">json</span>({ error<span class="op">:</span> result })<span class="op">;</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span> <span class="co">// no commit -&gt; rollback</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  unit<span class="op">.</span><span class="fu">commit</span>()<span class="op">;</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">location</span>(<span class="vs">`/api/parkings/</span><span class="sc">${</span>result<span class="op">.</span><span class="at">id</span><span class="sc">}</span><span class="vs">`</span>)<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">CREATED</span>)<span class="op">.</span><span class="fu">json</span>(result)<span class="op">;</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> ParkingService {</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">constructor</span>(<span class="kw">private</span> <span class="kw">readonly</span> unit<span class="op">:</span> Unit) {}</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrive</span>(</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    licensePlate<span class="op">:</span> <span class="dt">string</span><span class="op">,</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    spotId<span class="op">:</span> <span class="dt">number</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  )<span class="op">:</span> ParkingDto <span class="op">|</span> <span class="st">"car-not-found"</span> <span class="op">|</span> <span class="st">"spot-not-found"</span> <span class="op">|</span> <span class="st">"spot-occupied"</span> <span class="op">|</span> <span class="st">"car-already-parked"</span> {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="op">!</span><span class="kw">new</span> <span class="fu">CarService</span>(<span class="kw">this</span><span class="op">.</span><span class="at">unit</span>)<span class="op">.</span><span class="fu">exists</span>(licensePlate)) {</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> <span class="st">"car-not-found"</span><span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ... more checks, then the INSERT</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Why the router, and not each service?</p>
+<ul>
+<li><strong>No nested transactions.</strong> <code>ParkingService</code> uses <code>CarService</code> for a lookup. Both work with the same unit, so there is exactly one transaction. If every service method started its own, the second <code>begin()</code> would fail with “Transaction already started”.</li>
+<li><strong>The boundary is visible.</strong> One look at a route shows whether it writes and where it commits.</li>
+<li><strong>Tests decide where the data lives.</strong> A test creates a unit on an in-memory database and hands it to the service. The service does not notice.</li>
+</ul>
+<p>The service still never sees <code>Request</code> or <code>Response</code>, and the router contains no SQL.</p>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="warning">⚠️</span> <strong>No <code>await</code> between <code>begin()</code> and <code>commit()</code>.</strong> All requests share one connection. If a request pauses inside its transaction, the next request’s statements run on the same connection and end up in the same transaction. Read files and call other services before you begin, then do the database work in one synchronous block.</p>
+</blockquote>
+</section>
+</section>
+<section id="one-connection-here-a-pool-elsewhere" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="one-connection-here-a-pool-elsewhere"><span class="header-section-number">12.8</span> One connection here, a pool elsewhere</h2>
+<p>Our application keeps one connection open for its whole life. That fits SQLite: the driver is synchronous, there is only one writer anyway, and the transaction rules above keep requests apart. A database server is different. There, a request waits for the network, many requests run at the same time, and each transaction needs a connection of its own. Applications then keep a <strong>pool</strong> of connections and hand one to each request.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/htl-leo-wmc-3\.github\.io\/wmc-3\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../../../content/Units/03-Database/material/02_queries/README.html" class="pagination-link" aria-label="Queries">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../../../content/Units/03-Database/material/04_testing-and-import/README.html" class="pagination-link" aria-label="Testing and Importing">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Testing and Importing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 — HTL Leonding</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Author: HTL Leonding</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

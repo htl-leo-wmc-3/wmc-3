@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Queries – Web and Mobile Computing 3</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html" rel="next">
+<link href="../../../../../content/Units/03-Database/material/01_sqlite/README.html" rel="prev">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-bfe050db2283133c8854d94eaab4e9ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/quarto-novedu-1.0.0/novedu.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../../../../styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html">Database</a></li><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/02_queries/README.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../../../../">Web and Mobile Computing 3</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../../../../WMC3.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Node.js</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/01_tools/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/01_tools/VSCode-Extensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visual Studio Code</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/02_node/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to Node.js</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/01-Node.js/03_npm/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to <code>npm</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">TypeScript and Express</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/01_typescript-intro/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to TypeScript</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/02_arrays-and-functions/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Arrays and Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/03_async-and-files/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Asynchronous Programming and Files</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/04_express-intro/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">HTTP, REST and Express</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/02-TypeScript-and-Express/material/05_objects-and-classes/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Objects, Types and Classes</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Database</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">SQLite</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/02_queries/README.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../../../content/Units/03-Database/material/04_testing-and-import/README.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Testing and Importing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sql-injection" id="toc-sql-injection" class="nav-link active" data-scroll-target="#sql-injection"><span class="header-section-number">11.1</span> SQL injection</a></li>
+  <li><a href="#parameters-and-name" id="toc-parameters-and-name" class="nav-link" data-scroll-target="#parameters-and-name"><span class="header-section-number">11.2</span> Parameters: <code>?</code> and <code>:name</code></a></li>
+  <li><a href="#what-comes-back" id="toc-what-comes-back" class="nav-link" data-scroll-target="#what-comes-back"><span class="header-section-number">11.3</span> What comes back</a></li>
+  <li><a href="#filtering" id="toc-filtering" class="nav-link" data-scroll-target="#filtering"><span class="header-section-number">11.4</span> Filtering</a>
+  <ul class="collapse">
+  <li><a href="#a-where-built-from-fragments" id="toc-a-where-built-from-fragments" class="nav-link" data-scroll-target="#a-where-built-from-fragments"><span class="header-section-number">11.4.1</span> A <code>WHERE</code> built from fragments</a></li>
+  <li><a href="#like" id="toc-like" class="nav-link" data-scroll-target="#like"><span class="header-section-number">11.4.2</span> <code>LIKE</code></a></li>
+  </ul></li>
+  <li><a href="#sorting-and-limiting" id="toc-sorting-and-limiting" class="nav-link" data-scroll-target="#sorting-and-limiting"><span class="header-section-number">11.5</span> Sorting and limiting</a></li>
+  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins"><span class="header-section-number">11.6</span> Joins</a></li>
+  <li><a href="#grouping-and-aggregates" id="toc-grouping-and-aggregates" class="nav-link" data-scroll-target="#grouping-and-aggregates"><span class="header-section-number">11.7</span> Grouping and aggregates</a></li>
+  <li><a href="#subqueries" id="toc-subqueries" class="nav-link" data-scroll-target="#subqueries"><span class="header-section-number">11.8</span> Subqueries</a></li>
+  <li><a href="#dates" id="toc-dates" class="nav-link" data-scroll-target="#dates"><span class="header-section-number">11.9</span> Dates</a></li>
+  <li><a href="#validating-query-parameters" id="toc-validating-query-parameters" class="nav-link" data-scroll-target="#validating-query-parameters"><span class="header-section-number">11.10</span> Validating query parameters</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html">Database</a></li><li class="breadcrumb-item"><a href="../../../../../content/Units/03-Database/material/02_queries/README.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Queries</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Stuck or have a question?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ask the AI tutor for this unit. It knows the chapters and exercises of this unit. You can ask in German or English.</p>
+<div class="novedu-cta novedu-cta-tutor">
+<p><a href="https://app.novedu.at/d4gouxxqj1">▶ Ask the WMC tutor on app.novedu.at</a></p>
+</div>
+</div>
+</div>
+<p>You know <code>SELECT</code>, joins and <code>GROUP BY</code> from DBI. This chapter is about running such queries from TypeScript <strong>safely</strong>, and about turning what comes back into something an API can return. All examples use the database of a small parking garage:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Table</th>
+<th>Columns</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cars</code></td>
+<td><code>license_plate</code> (PK), <code>model</code>, <code>owner</code></td>
+</tr>
+<tr class="even">
+<td><code>spots</code></td>
+<td><code>id</code> (PK), <code>floor</code>, <code>number</code>, <code>kind</code> (<code>regular</code>, <code>electric</code>, <code>accessible</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>parkings</code></td>
+<td><code>id</code> (PK), <code>spot_id</code> (FK), <code>license_plate</code> (FK), <code>arrived</code>, <code>departed</code> (<code>NULL</code> while the car is still there), <code>fee</code></td>
+</tr>
+</tbody>
+</table>
+<section id="sql-injection" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sql-injection"><span class="header-section-number">11.1</span> SQL injection</h2>
+<p>Imagine a login that checks the user name and password like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// NEVER do this</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> sql <span class="op">=</span> <span class="vs">`SELECT COUNT(*) AS found FROM users</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="vs">              WHERE name = '</span><span class="sc">${</span>name<span class="sc">}</span><span class="vs">' AND password = '</span><span class="sc">${</span>password<span class="sc">}</span><span class="vs">'`</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> row <span class="op">=</span> <span class="fu">getDb</span>()<span class="op">.</span><span class="fu">prepare</span>(sql)<span class="op">.</span><span class="fu">get</span>() <span class="im">as</span> { found<span class="op">:</span> <span class="dt">number</span> }<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A user who types <code>x' OR '1'='1</code> as the password turns the statement into</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> found <span class="kw">FROM</span> users <span class="kw">WHERE</span> name <span class="op">=</span> <span class="st">'admin'</span> <span class="kw">AND</span> <span class="kw">password</span> <span class="op">=</span> <span class="st">'x'</span> <span class="kw">OR</span> <span class="st">'1'</span><span class="op">=</span><span class="st">'1'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>AND</code> binds stronger than <code>OR</code>, so the condition is true for <strong>every</strong> row, and the attacker is logged in without knowing any password. With other input they can read other tables, change data or delete it (<a href="https://xkcd.com/327/">the classic comic</a>). This is <strong>SQL injection</strong>, and it is still one of the most common security holes in web applications.</p>
+<p>The cause is always the same: a <strong>value</strong> from the outside became part of the <strong>SQL text</strong>. The fix is always the same as well: a prepared statement with placeholders.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> row <span class="op">=</span> <span class="fu">getDb</span>()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">prepare</span>(<span class="st">"SELECT COUNT(*) AS found FROM users WHERE name = ? AND password = ?"</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">get</span>(name<span class="op">,</span> password) <span class="im">as</span> { found<span class="op">:</span> <span class="dt">number</span> }<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The statement is compiled first, and the values are passed separately. Whatever the user types is compared as a string and can never change the structure of the statement.</p>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="warning">⚠️</span> Do not try to “clean” input yourself by removing quotes or similar. You will miss a case, and the library already does it correctly. <strong>Every</strong> value that comes from a request, a file or another system goes in as a parameter. No exceptions, also not for numbers.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="bulb">💡</span> Storing passwords as plain text, as in the example, is a second serious mistake. Passwords are stored as salted hashes, a topic for later.</p>
+</blockquote>
+</section>
+<section id="parameters-and-name" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="parameters-and-name"><span class="header-section-number">11.2</span> Parameters: <code>?</code> and <code>:name</code></h2>
+<p>Placeholders come in two forms:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">// positional: the values in the same order as the question marks</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">getDb</span>()<span class="op">.</span><span class="fu">prepare</span>(<span class="st">"SELECT * FROM spots WHERE floor = ? AND kind = ?"</span>)<span class="op">.</span><span class="fu">all</span>(<span class="dv">1</span><span class="op">,</span> <span class="st">"electric"</span>)<span class="op">;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// named: one object, the keys are the names</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">getDb</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">prepare</span>(<span class="st">"SELECT * FROM spots WHERE floor = :floor AND kind = :kind"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">all</span>({ floor<span class="op">:</span> <span class="dv">1</span><span class="op">,</span> kind<span class="op">:</span> <span class="st">"electric"</span> })<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Named parameters are easier to read once a statement has more than two or three of them, and the same name can appear twice in the statement.</p>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="warning">⚠️</span> The names in the statement and the keys of the object must match. A key that the statement does not contain makes <code>node:sqlite</code> throw (“Unknown named parameter”). The other way round it stays silent: if the object has <strong>no</strong> key for <code>:kind</code>, the driver uses <code>NULL</code> for it, and the query quietly returns nothing.</p>
+</blockquote>
+<p>Only <strong>values</strong> can be parameters. Table names, column names, <code>ASC</code>/<code>DESC</code> and other keywords cannot. When they depend on the request, they come from a fixed list, see “Sorting” below.</p>
+</section>
+<section id="what-comes-back" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="what-comes-back"><span class="header-section-number">11.3</span> What comes back</h2>
+<p><code>get(...)</code> returns one row or <code>undefined</code>, <code>all(...)</code> an array of rows. The values arrive as JavaScript types:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>SQLite</th>
+<th>TypeScript</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>INTEGER</code>, <code>REAL</code></td>
+<td><code>number</code></td>
+</tr>
+<tr class="even">
+<td><code>TEXT</code></td>
+<td><code>string</code></td>
+</tr>
+<tr class="odd">
+<td><code>NULL</code></td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<p>A row’s keys are the names of the result columns. Give computed columns a name with <code>AS</code>, and choose names in camelCase, so the row already has the shape your API returns:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">type</span> FloorOccupancy <span class="op">=</span> {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  floor<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  totalSpots<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  occupied<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> rows <span class="op">=</span> <span class="fu">getDb</span>()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">prepare</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="vs">`SELECT s.floor AS floor, COUNT(*) AS totalSpots, COUNT(p.id) AS occupied</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="vs">       FROM spots s</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="vs">       LEFT JOIN parkings p ON p.spot_id = s.id AND p.departed IS NULL</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="vs">      GROUP BY s.floor</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="vs">      ORDER BY s.floor`</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">all</span>() <span class="im">as</span> FloorOccupancy[]<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>When a row has the table’s column names (<code>license_plate</code>), map it to your own type with a small function, as in the previous chapter.</p>
+</section>
+<section id="filtering" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="filtering"><span class="header-section-number">11.4</span> Filtering</h2>
+<section id="a-where-built-from-fragments" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="a-where-built-from-fragments"><span class="header-section-number">11.4.1</span> A <code>WHERE</code> built from fragments</h3>
+<p>Optional filters from the query string mean a <code>WHERE</code> clause whose parts depend on the request. Build it from <strong>fixed</strong> text fragments, and collect the values separately:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">findFreeSpots</span>(floor<span class="op">?:</span> <span class="dt">number</span><span class="op">,</span> kind<span class="op">?:</span> SpotKind)<span class="op">:</span> Spot[] {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> conditions <span class="op">=</span> [</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"NOT EXISTS (SELECT 1 FROM parkings p WHERE p.spot_id = s.id AND p.departed IS NULL)"</span><span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> values<span class="op">:</span> (<span class="dt">string</span> <span class="op">|</span> <span class="dt">number</span>)[] <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (floor <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    conditions<span class="op">.</span><span class="fu">push</span>(<span class="st">"s.floor = ?"</span>)<span class="op">;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    values<span class="op">.</span><span class="fu">push</span>(floor)<span class="op">;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (kind <span class="op">!==</span> <span class="kw">undefined</span>) {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    conditions<span class="op">.</span><span class="fu">push</span>(<span class="st">"s.kind = ?"</span>)<span class="op">;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    values<span class="op">.</span><span class="fu">push</span>(kind)<span class="op">;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sql <span class="op">=</span> <span class="vs">`SELECT * FROM spots s</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="vs">                WHERE </span><span class="sc">${</span>conditions<span class="op">.</span><span class="fu">join</span>(<span class="st">" AND "</span>)<span class="sc">}</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="vs">                ORDER BY s.floor, s.number`</span><span class="op">;</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="fu">getDb</span>()<span class="op">.</span><span class="fu">prepare</span>(sql)<span class="op">.</span><span class="fu">all</span>(<span class="op">...</span>values) <span class="im">as</span> Spot[]<span class="op">;</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The SQL text only ever contains what you wrote yourself. Everything from the request is in <code>values</code>.</p>
+</section>
+<section id="like" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="like"><span class="header-section-number">11.4.2</span> <code>LIKE</code></h3>
+<p><code>LIKE</code> compares with a pattern: <code>%</code> stands for any number of characters, <code>_</code> for exactly one. The wildcards belong in the <strong>value</strong>, not in the SQL:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDb</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">prepare</span>(<span class="st">"SELECT * FROM cars WHERE owner LIKE ? ORDER BY owner"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">all</span>(<span class="vs">`%</span><span class="sc">${</span>owner<span class="sc">}</span><span class="vs">%`</span>)<span class="op">;</span> <span class="co">// contains `owner`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>SQLite’s <code>LIKE</code> ignores the difference between upper and lower case, but only for the 26 ASCII letters: <code>a</code> matches <code>A</code>, <code>ä</code> does not match <code>Ä</code>. If that matters, compare <code>LOWER(owner)</code> with a lowercased value. (A user who types <code>%</code> themselves gets “everything”, which is harmless here.)</p>
+</section>
+</section>
+<section id="sorting-and-limiting" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="sorting-and-limiting"><span class="header-section-number">11.5</span> Sorting and limiting</h2>
+<p><code>ORDER BY ?</code> does not work: the placeholder would be a value, and sorting by a constant value does nothing. The column has to be part of the SQL text, so it must <strong>never</strong> come from the request directly. Map the allowed values to columns instead:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// model.ts</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">export type</span> CarSort <span class="op">=</span> <span class="st">"plate"</span> <span class="op">|</span> <span class="st">"owner"</span> <span class="op">|</span> <span class="st">"model"</span><span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">isCarSort</span>(value<span class="op">:</span> <span class="dt">string</span>)<span class="op">:</span> value <span class="kw">is</span> CarSort {</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> value <span class="op">===</span> <span class="st">"plate"</span> <span class="op">||</span> value <span class="op">===</span> <span class="st">"owner"</span> <span class="op">||</span> value <span class="op">===</span> <span class="st">"model"</span><span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">// car-service.ts</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> SORT_COLUMNS <span class="op">=</span> {</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  plate<span class="op">:</span> <span class="st">"license_plate"</span><span class="op">,</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  owner<span class="op">:</span> <span class="st">"owner"</span><span class="op">,</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  model<span class="op">:</span> <span class="st">"model"</span><span class="op">,</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">findCars</span>(owner<span class="op">:</span> <span class="dt">string</span><span class="op">,</span> sort<span class="op">:</span> CarSort)<span class="op">:</span> CarDto[] {</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> column <span class="op">=</span> SORT_COLUMNS[sort]<span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> rows <span class="op">=</span> <span class="fu">getDb</span>()</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">prepare</span>(<span class="vs">`SELECT * FROM cars WHERE owner LIKE ? ORDER BY </span><span class="sc">${</span>column<span class="sc">}</span><span class="vs">, license_plate`</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="op">.</span><span class="fu">all</span>(<span class="vs">`%</span><span class="sc">${</span>owner<span class="sc">}</span><span class="vs">%`</span>) <span class="im">as</span> CarRow[]<span class="op">;</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> rows<span class="op">.</span><span class="fu">map</span>(toDto)<span class="op">;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The router checks the request’s <code>sort</code> with <code>isCarSort</code> and answers <code>400</code> for anything else, so the service only ever receives one of the three keys. The SQL text still only contains strings you wrote. <code>LIMIT ?</code> on the other hand is a value and works as a parameter, but check the number in the router first: a positive integer, with an upper bound.</p>
+</section>
+<section id="joins" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="joins"><span class="header-section-number">11.6</span> Joins</h2>
+<p>An <strong>inner join</strong> returns only rows that have a partner on both sides:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> p.arrived, p.departed, p.fee, s.<span class="fu">floor</span>, s.<span class="dt">number</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> parkings p</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> spots s <span class="kw">ON</span> s.<span class="kw">id</span> <span class="op">=</span> p.spot_id</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> p.license_plate <span class="op">=</span> ?</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> p.arrived <span class="kw">DESC</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <strong>left (outer) join</strong> keeps every row of the left table, and fills the columns of the right table with <code>NULL</code> where there is no partner. That is what you need for “all floors, and how many cars are on each”, including floors that are empty:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> s.<span class="fu">floor</span>, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> totalSpots, <span class="fu">COUNT</span>(p.<span class="kw">id</span>) <span class="kw">AS</span> occupied</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> spots s</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">LEFT</span> <span class="kw">JOIN</span> parkings p <span class="kw">ON</span> p.spot_id <span class="op">=</span> s.<span class="kw">id</span> <span class="kw">AND</span> p.departed <span class="kw">IS</span> <span class="kw">NULL</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> s.<span class="fu">floor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="warning">⚠️</span> <strong><code>ON</code> or <code>WHERE</code>?</strong> The condition <code>p.departed IS NULL</code> is part of the join here: “join only the parkings that are still running”. Moved into a <code>WHERE</code>, it is applied <strong>after</strong> the join. A spot whose cars have all left joins only rows with a <code>departed</code> date, the <code>WHERE</code> removes them all, and the spot disappears from the result. <code>totalSpots</code> is then wrong. Rule of thumb: conditions on the right table of a <code>LEFT JOIN</code> go into <code>ON</code>.</p>
+</blockquote>
+<p>A table can also be joined with <strong>itself</strong>, for example employees with their manager, who is another employee. Give the table two aliases, and use a <code>LEFT JOIN</code> so the boss, who has no manager, is not lost.</p>
+</section>
+<section id="grouping-and-aggregates" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="grouping-and-aggregates"><span class="header-section-number">11.7</span> Grouping and aggregates</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Function</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>COUNT(*)</code></td>
+<td>number of rows in the group</td>
+</tr>
+<tr class="even">
+<td><code>COUNT(column)</code></td>
+<td>number of rows where <code>column</code> is not <code>NULL</code></td>
+</tr>
+<tr class="odd">
+<td><code>COUNT(DISTINCT column)</code></td>
+<td>number of different values</td>
+</tr>
+<tr class="even">
+<td><code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code></td>
+<td>as the name says; <code>NULL</code> if there were no values</td>
+</tr>
+<tr class="odd">
+<td><code>ROUND(x, 2)</code></td>
+<td>rounded to 2 decimal places</td>
+</tr>
+<tr class="even">
+<td><code>COALESCE(x, 0)</code></td>
+<td><code>x</code>, or <code>0</code> if <code>x</code> is <code>NULL</code></td>
+</tr>
+</tbody>
+</table>
+<p>In the occupancy query above, <code>COUNT(*)</code> counts all spots of a floor, while <code>COUNT(p.id)</code> counts only those that found a current parking. The outer join produced <code>NULL</code> for the others.</p>
+<p><code>WHERE</code> filters <strong>rows</strong> before they are grouped, <code>HAVING</code> filters <strong>groups</strong> afterwards:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> c.owner, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> parkings</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> cars c</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">JOIN</span> parkings p <span class="kw">ON</span> p.license_plate <span class="op">=</span> c.license_plate</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> p.departed <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span>      <span class="co">-- only finished parkings</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> c.owner</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;=</span> ?              <span class="co">-- only regular customers</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> parkings <span class="kw">DESC</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote class="blockquote">
+<p><span class="emoji" data-emoji="warning">⚠️</span> Joining two “many” sides at once multiplies rows. If a floor has 8 spots and you join both the spots and all past parkings, every spot appears once per parking, and <code>COUNT(*)</code> no longer counts spots. <code>COUNT(DISTINCT s.id)</code> counts them correctly again, or you compute one of the numbers in a subquery.</p>
+</blockquote>
+<p>An aggregate without <code>GROUP BY</code> returns exactly one row. <code>SUM</code> over no rows is <code>NULL</code>, not <code>0</code>, so a revenue query for a day without any parking needs <code>COALESCE(SUM(fee), 0)</code>.</p>
+</section>
+<section id="subqueries" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="subqueries"><span class="header-section-number">11.8</span> Subqueries</h2>
+<p>A query inside a query. The most useful forms for us:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- cars that have never parked</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> cars c</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> <span class="kw">NOT</span> <span class="kw">EXISTS</span> (<span class="kw">SELECT</span> <span class="dv">1</span> <span class="kw">FROM</span> parkings p <span class="kw">WHERE</span> p.license_plate <span class="op">=</span> c.license_plate);</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- spots on the floor with the most electric spots</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> spots</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> <span class="fu">floor</span> <span class="op">=</span> (<span class="kw">SELECT</span> <span class="fu">floor</span> <span class="kw">FROM</span> spots <span class="kw">WHERE</span> kind <span class="op">=</span> <span class="st">'electric'</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                 <span class="kw">GROUP</span> <span class="kw">BY</span> <span class="fu">floor</span> <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">DESC</span> <span class="kw">LIMIT</span> <span class="dv">1</span>);</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>EXISTS</code> / <code>NOT EXISTS</code> asks “is there at least one matching row?” and is often the clearest way to write a condition about another table. A subquery in <code>=</code> must return exactly one value.</p>
+</section>
+<section id="dates" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="dates"><span class="header-section-number">11.9</span> Dates</h2>
+<p>SQLite stores dates as <code>TEXT</code>, and its date functions work on ISO strings:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Expression</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>date('2026-11-24 14:30:00')</code></td>
+<td><code>'2026-11-24'</code></td>
+</tr>
+<tr class="even">
+<td><code>strftime('%Y', arrived)</code></td>
+<td>the year as text, <code>'2026'</code></td>
+</tr>
+<tr class="odd">
+<td><code>date('now')</code></td>
+<td>today (in UTC)</td>
+</tr>
+<tr class="even">
+<td><code>julianday(departed) - julianday(arrived)</code></td>
+<td>the difference in <strong>days</strong>, as a decimal number</td>
+</tr>
+</tbody>
+</table>
+<p>Because ISO strings sort correctly, you can compare them directly. Be careful with ranges: <code>departed &lt;= '2026-11-30'</code> misses <code>'2026-11-30 17:00:00'</code>, because the longer string is “greater”. Compare the date part instead:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="dt">date</span>(departed) <span class="kw">AS</span> <span class="dt">day</span>, <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> parkings, <span class="fu">ROUND</span>(<span class="fu">SUM</span>(fee), <span class="dv">2</span>) <span class="kw">AS</span> revenue</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> parkings</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a> <span class="kw">WHERE</span> <span class="dt">date</span>(departed) <span class="kw">BETWEEN</span> ? <span class="kw">AND</span> ?   <span class="co">-- inclusive on both ends</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> <span class="dt">date</span>(departed)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a> <span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">day</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="validating-query-parameters" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="validating-query-parameters"><span class="header-section-number">11.10</span> Validating query parameters</h2>
+<p>Everything in <code>req.query</code> is a string, an array or missing. Check it in the <strong>router</strong>, before the service is called, and answer <code>400 Bad Request</code> if it does not fit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode typescript code-with-copy"><code class="sourceCode typescript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>carRouter<span class="op">.</span><span class="fu">get</span>(<span class="st">"/cars"</span><span class="op">,</span> (req<span class="op">,</span> res) <span class="kw">=&gt;</span> {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> owner <span class="op">=</span> <span class="fu">singleValue</span>(req<span class="op">.</span><span class="at">query</span><span class="op">.</span><span class="at">owner</span>) <span class="op">??</span> <span class="st">""</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> sort <span class="op">=</span> <span class="fu">singleValue</span>(req<span class="op">.</span><span class="at">query</span><span class="op">.</span><span class="at">sort</span>) <span class="op">??</span> <span class="st">"plate"</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="fu">isCarSort</span>(sort)) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    res<span class="op">.</span><span class="fu">status</span>(StatusCodes<span class="op">.</span><span class="at">BAD_REQUEST</span>)<span class="op">.</span><span class="fu">json</span>({ error<span class="op">:</span> <span class="st">"sort must be plate, owner or model"</span> })<span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  res<span class="op">.</span><span class="fu">json</span>(<span class="fu">findCars</span>(owner<span class="op">,</span> sort))<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Numbers: <code>Number(text)</code>, then <code>Number.isInteger(...)</code> and a range check.</li>
+<li>Dates: a simple pattern (<code>/^\d{4}-\d{2}-\d{2}$/</code>) and, for ranges, <code>from &lt;= to</code>.</li>
+<li>Fixed sets of values (<code>kind</code>): a type guard such as <code>isSpotKind(value)</code>.</li>
+</ul>
+<p>The parameters protect you against injection. The validation protects you against nonsense, and gives the client a clear answer instead of an empty list.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/htl-leo-wmc-3\.github\.io\/wmc-3\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            // default icon
+            link.classList.add("external");
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../../../../content/Units/03-Database/material/01_sqlite/README.html" class="pagination-link" aria-label="SQLite">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">SQLite</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../../../../content/Units/03-Database/material/03_writing-and-transactions/README.html" class="pagination-link" aria-label="Writing and Transactions">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Writing and Transactions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 — HTL Leonding</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Author: HTL Leonding</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../../../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
